@@ -4,6 +4,7 @@ import React from 'react'
 import './globals.css'
 // eslint-disable-next-line camelcase
 import {Inter, Space_Grotesk} from 'next/font/google'
+import ThemeProvider from '@/context/ThemeProvider'
 
 export const metadata: Metadata = {
   title: 'Next.js 13 with Clerk',
@@ -31,20 +32,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+    <html lang="en">
+    <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
     <ClerkProvider
       appearance={{
         elements: {
           formButtonPrimary: 'primary-gradient',
-          footerActionLink: 'primary-text-gradient hover:text-primary-500'
+          footerActionLink: 'primary-text-gradient hover:text-blue-500'
         }
       }}
     >
-      <html lang="en">
-      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
-      <h1 className="h1-bold">This is a piece of text</h1>
-      {children}
-      </body>
-      </html>
+      <ThemeProvider>
+        {children}
+      </ThemeProvider>
     </ClerkProvider>
+    </body>
+    </html>
   )
 }
