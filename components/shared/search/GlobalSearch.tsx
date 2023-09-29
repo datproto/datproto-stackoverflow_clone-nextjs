@@ -1,8 +1,16 @@
-import React from 'react'
+'use client'
+
+import React, {useState} from 'react'
 import Image from 'next/image'
 import {Input} from '@/components/ui/input'
 
 const GlobalSearch = () => {
+  const [inputValue, setInputValue] = useState('')
+
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setInputValue(e.currentTarget.value)
+  }
+
   return (
     <div className="relative w-full max-w-[600px] max-lg:hidden">
       <div
@@ -12,8 +20,9 @@ const GlobalSearch = () => {
         <Input
           type="text"
           placeholder="Search globally"
-          value=""
-          className="paragraph-regular no-focus placeholder background-light800_darkgradient  border-none shadow-none outline-none"
+          value={inputValue}
+          onChange={handleChange}
+          className="paragraph-regular no-focus placeholder text-dark400_light900 background-light800_darkgradient border-none shadow-none outline-none"
         />
       </div>
 
