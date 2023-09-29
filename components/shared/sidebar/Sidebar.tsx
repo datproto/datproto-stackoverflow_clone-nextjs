@@ -7,19 +7,20 @@ import Image from 'next/image'
 import {usePathname} from 'next/navigation'
 import {SignedIn, SignedOut} from '@clerk/nextjs'
 import {Button} from '@/components/ui/button'
+import Tag from '@/components/shared/Tag'
 
 const LeftSidebar = () => {
   const pathname = usePathname()
   return (
     <section
-      className="background-light900_dark200 light-border fixed top-0 z-40 flex h-screen min-w-[266px] flex-col justify-between border-r px-6 pb-8 pt-40 max-sm:hidden">
+      className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex h-screen flex-col justify-between overflow-y-auto border-r p-6 pt-36 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]">
       <div className="flex flex-col gap-6">
         {sidebarLinks.map(item => {
 
           const isActive = (pathname.includes(item.route) && item.route.length > 1) || pathname === item.route
           return (
-            <Link key={item.label} href={item.route}
-                  className={`${isActive ? 'primary-gradient rounded-lg text-light-900' : 'text-dark300_light900'} flex items-center justify-start gap-4 bg-transparent p-4`}>
+            <div key={item.label}
+                 className={`${isActive ? 'primary-gradient rounded-lg text-light-900' : 'text-dark300_light900'} flex items-center justify-start gap-4 bg-transparent p-4`}>
               <Image
                 src={item.imgURL}
                 alt={item.label}
@@ -27,8 +28,8 @@ const LeftSidebar = () => {
                 height={20}
                 className={`${isActive ? '' : 'invert-colors'}`}
               />
-              <p className={`${isActive ? 'base-bold' : 'base-medium'}`}>{item.label}</p>
-            </Link>
+              <p className={`${isActive ? 'base-bold' : 'base-medium'} max-lg:hidden`}>{item.label}</p>
+            </div>
           )
         })}
       </div>
@@ -45,7 +46,7 @@ const LeftSidebar = () => {
                 height={20}
                 className="invert-colors"
               />
-              <p className="base-medium">Log in</p>
+              <p className="base-medium max-lg:hidden">Log in</p>
             </Button>
           </Link>
 
@@ -59,7 +60,7 @@ const LeftSidebar = () => {
                 height={20}
                 className="invert-colors"
               />
-              <p className="base-medium">Sign Up</p>
+              <p className="base-medium max-lg:hidden">Sign Up</p>
             </Button>
           </Link>
         </div>
@@ -77,7 +78,7 @@ const LeftSidebar = () => {
                 height={20}
                 className="invert-colors"
               />
-              <p className="base-medium">Logout</p>
+              <p className="base-medium max-lg:hidden">Logout</p>
             </Button>
           </Link>
         </div>
@@ -89,7 +90,7 @@ const LeftSidebar = () => {
 const RightSideBar = () => {
   return (
     <section
-      className="background-light900_dark200 light-border fixed right-0 top-0 z-40 flex h-screen w-[330px] flex-col gap-16 border-r px-6 pb-8 pt-40 max-lg:hidden">
+      className="background-light900_dark200 light-border custom-scrollbar sticky right-0 top-0 flex h-screen w-[350px] flex-col gap-16 overflow-y-auto border-l p-6 pt-36 shadow-light-300 dark:shadow-none max-xl:hidden">
 
       <div id="right-sidebard_hot" className="flex flex-col gap-6">
         <h3 className="h3-bold text-dark200_light900 capitalize">hot network</h3>
@@ -97,7 +98,7 @@ const RightSideBar = () => {
           {hotQuestions.map(ques => (
             <Link href="/" key={`top-${ques._id}`} id={`right-sidebar_tags-list-${ques._id}`}
                   className="flex-between text-dark500_light700 flex items-start gap-3">
-              <div>{ques.title}</div>
+              <div className="body-medium">{ques.title}</div>
 
               <Image src="/assets/icons/chevron-right.svg" width={20} height={20} alt="right-icon"
                      className="invert-colors self-start"/>
@@ -112,10 +113,8 @@ const RightSideBar = () => {
           {popularTags.map(tag => (
             <Link href="/" key={`tag-${tag._id}`} id={`right-sidebar_tags-list-${tag._id}`}
                   className="flex-between flex">
-              <div
-                className="text-light400_light500 background-light800_dark300 rounded-md px-4 py-2 uppercase">{tag.name}
-              </div>
-              <p className="text-dark200_light900">
+              <Tag text={tag.name} customClass="px-4 py-2 uppercase subtle-medium"/>
+              <p className="text-dark500_light700 body-medium">
                 {tag.totalQuestions}+
               </p>
             </Link>
