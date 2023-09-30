@@ -1,8 +1,11 @@
+'use client'
+
 import Link from 'next/link'
 import {Button} from '@/components/ui/button'
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar'
 import Tag from '@/components/shared/Tag'
-import {filters} from '@/constants'
+import FilterDropdown from '@/components/shared/filter/FilterDropdown'
+import {HomePageFilters} from '@/constants/filter'
 
 export default function Home() {
   return (
@@ -17,7 +20,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="mt-11 flex justify-between gap-5 lg:flex-col">
+      <div className="mt-11 flex flex-col justify-between gap-5">
         <LocalSearchbar
           route="/"
           placeholder="Search for questions..."
@@ -26,11 +29,25 @@ export default function Home() {
         />
 
         <div className="flex gap-3 max-lg:hidden">
-          {filters.map(filter => (
-            <Tag key={`filter-${filter._id}}`} text={filter.name}
-                 customClass="px-6 py-3 capitalize body-medium hover:!bg-primary-100 dark:hover:!bg-dark-300"/>
-          ))}
+          {HomePageFilters.map(filter => {
+            const active = 'newest'
+            console.log(active === filter.value)
+
+            return (
+              <Tag key={`filter-${filter.value}}`} text={filter.name}
+                   customClass={`
+                 px-6 py-3 capitalize body-medium hover:text-primary-500 hover:bg-primary-100 dark:hover:bg-dark-300 
+                 ${active === filter.value && 'bg-primary-100 text-primary-500'}
+                 `}/>
+            )
+          })}
         </div>
+
+        <FilterDropdown
+          filters={HomePageFilters}
+          customContainerClasses="hidden max-md:flex"
+          customSelectClasses="min-h-[56px] sm:min-w-[170px]"
+        />
       </div>
     </>
   )

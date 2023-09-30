@@ -19,8 +19,8 @@ const LeftSidebar = () => {
 
           const isActive = (pathname.includes(item.route) && item.route.length > 1) || pathname === item.route
           return (
-            <div key={item.label}
-                 className={`${isActive ? 'primary-gradient rounded-lg text-light-900' : 'text-dark300_light900'} flex items-center justify-start gap-4 bg-transparent p-4`}>
+            <Link href={item.route} key={item.label}
+                  className={`${isActive ? 'primary-gradient rounded-lg text-light-900' : 'text-dark300_light900'} flex items-center justify-start gap-4 bg-transparent p-4`}>
               <Image
                 src={item.imgURL}
                 alt={item.label}
@@ -29,7 +29,7 @@ const LeftSidebar = () => {
                 className={`${isActive ? '' : 'invert-colors'}`}
               />
               <p className={`${isActive ? 'base-bold' : 'base-medium'} max-lg:hidden`}>{item.label}</p>
-            </div>
+            </Link>
           )
         })}
       </div>
@@ -113,7 +113,8 @@ const RightSideBar = () => {
           {popularTags.map(tag => (
             <Link href="/" key={`tag-${tag._id}`} id={`right-sidebar_tags-list-${tag._id}`}
                   className="flex-between flex">
-              <Tag text={tag.name} customClass="px-4 py-2 uppercase subtle-medium"/>
+              <Tag text={tag.name}
+                   customClass="px-4 py-2 uppercase subtle-medium"/>
               <p className="text-dark500_light700 body-medium">
                 {tag.totalQuestions}+
               </p>
