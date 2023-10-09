@@ -87,3 +87,10 @@ export const popularTags = [
   {_id: 4, name: 'vue', totalQuestions: 2},
   {_id: 5, name: 'redux', totalQuestions: 10}
 ]
+
+export const filters = [
+  {_id: 1, name: 'newest', filter: 'newest'},
+  {_id: 2, name: 'recommended questions', filter: 'recommended'},
+  {_id: 3, name: 'frequent', filter: 'freq'},
+  {_id: 4, name: 'unanswered', filter: 'unanswered'}
+]
