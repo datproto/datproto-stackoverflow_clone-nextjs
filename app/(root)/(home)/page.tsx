@@ -6,6 +6,10 @@ import LocalSearchbar from '@/components/shared/search/LocalSearchbar'
 import Tag from '@/components/shared/Tag'
 import FilterDropdown from '@/components/shared/filter/FilterDropdown'
 import {HomePageFilters} from '@/constants/filter'
+import React from 'react'
+import {questions} from '@/constants'
+import NoResult from '@/components/shared/NoResult'
+import QuestionCard from '@/components/cards/QuestionCard'
 
 export default function Home() {
   return (
@@ -20,7 +24,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="mt-11 flex flex-col justify-between gap-5">
+      <div className="flex flex-col justify-between gap-5">
         <LocalSearchbar
           route="/"
           placeholder="Search for questions..."
@@ -31,10 +35,9 @@ export default function Home() {
         <div className="flex gap-3 max-lg:hidden">
           {HomePageFilters.map(filter => {
             const active = 'newest'
-            console.log(active === filter.value)
 
             return (
-              <Tag key={`filter-${filter.value}}`} text={filter.name}
+              <Tag _id={filter._id} key={`filter-${filter.value}}`} text={filter.name}
                    customClass={`
                  px-6 py-3 capitalize body-medium hover:text-primary-500 hover:bg-primary-100 dark:hover:bg-dark-300 
                  ${active === filter.value && 'bg-primary-100 text-primary-500'}
@@ -48,6 +51,30 @@ export default function Home() {
           customContainerClasses="hidden max-md:flex"
           customSelectClasses="min-h-[56px] sm:min-w-[170px]"
         />
+      </div>
+
+      <div className="mt-10 flex w-full flex-col gap-6">
+        {/* Looping through questions */}
+        {questions.length > 0 ? questions.map(q => (
+          <QuestionCard
+            key={q._id}
+            _id={q._id}
+            title={q.title}
+            tags={q.tags}
+            author={q.author}
+            upVotes={q.upVotes}
+            views={q.views}
+            answers={q.answers}
+            createdAt={q.createdAt}
+          />
+        )) : (
+          <NoResult
+            title="There's no question to show"
+            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
+            link="/ask-questions"
+            linkTitle="Ask Question"
+          />
+        )}
       </div>
     </>
   )

@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import {hotQuestions, popularTags, sidebarLinks} from '@/constants'
+import {popularTags, questions, sidebarLinks} from '@/constants'
 import Link from 'next/link'
 import Image from 'next/image'
 import {usePathname} from 'next/navigation'
@@ -95,7 +95,7 @@ const RightSideBar = () => {
       <div id="right-sidebard_hot" className="flex flex-col gap-6">
         <h3 className="h3-bold text-dark200_light900 capitalize">hot network</h3>
         <div id="right-sidebard_hot-list" className="flex flex-col gap-4">
-          {hotQuestions.map(ques => (
+          {questions.length > 0 ? questions.map(ques => ques.views >= 100 && (
             <Link href="/" key={`top-${ques._id}`} id={`right-sidebar_tags-list-${ques._id}`}
                   className="flex-between text-dark500_light700 flex items-start gap-3">
               <div className="body-medium">{ques.title}</div>
@@ -103,7 +103,7 @@ const RightSideBar = () => {
               <Image src="/assets/icons/chevron-right.svg" width={20} height={20} alt="right-icon"
                      className="invert-colors self-start"/>
             </Link>
-          ))}
+          )) : (<></>)}
         </div>
       </div>
 
@@ -111,14 +111,7 @@ const RightSideBar = () => {
         <h3 className="h3-bold text-dark200_light900 capitalize">popular tags</h3>
         <div id="right-sidebar_tags-list" className="flex flex-col gap-4">
           {popularTags.map(tag => (
-            <Link href="/" key={`tag-${tag._id}`} id={`right-sidebar_tags-list-${tag._id}`}
-                  className="flex-between flex">
-              <Tag text={tag.name}
-                   customClass="px-4 py-2 uppercase subtle-medium"/>
-              <p className="text-dark500_light700 body-medium">
-                {tag.totalQuestions}+
-              </p>
-            </Link>
+            <Tag key={tag._id} _id={tag._id} text={tag.name} showCount totalQuestions={tag.totalQuestions}/>
           ))}
         </div>
       </div>
