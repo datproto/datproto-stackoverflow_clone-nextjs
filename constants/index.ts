@@ -72,20 +72,99 @@ export const BADGE_CRITERIA = {
   }
 }
 
-export const hotQuestions = [
-  {_id: 1, title: 'How do I use express as a custom server in NextJS?'},
-  {_id: 2, title: 'Cascading Deletes in SQLAlchemy?'},
-  {_id: 3, title: 'How to Perfectly Center a Div with Tailwind CSS?'},
-  {_id: 4, title: 'Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?'},
-  {_id: 5, title: 'Redux Toolkit Not Updating State as Expected'}
+export const questions = [
+  {
+    _id: '1',
+    title: 'How do I use express as a custom server in NextJS?',
+    tags: [
+      {_id: '1', name: 'nextjs'},
+      {_id: '2', name: 'expressjs'}
+    ],
+    author: {
+      _id: '1',
+      name: 'John Doe',
+      picture: 'profile.jpg'
+    },
+    upVotes: 10,
+    views: 100,
+    answers: [],
+    createdAt: new Date('2023-08-23T12:00:00.00Z')
+  },
+  {
+    _id: '2',
+    title: 'Cascading Deletes in SQLAlchemy?',
+    tags: [
+      {_id: '3', name: 'python'},
+      {_id: '4', name: 'sql'}
+    ],
+    author: {
+      _id: '2',
+      name: 'Jane Smith',
+      picture: 'profile.jpg'
+    },
+    upVotes: 10,
+    views: 100,
+    answers: [],
+    createdAt: new Date('2023-08-23T12:00:00.00Z')
+  },
+  {
+    _id: '3',
+    title: 'How to Perfectly Center a Div with Tailwind CSS?',
+    tags: [
+      {_id: '5', name: 'css'},
+      {_id: '6', name: 'tailwind'}
+    ],
+    author: {
+      _id: '3',
+      name: 'Alice Johnson',
+      picture: 'profile.jpg'
+    },
+    upVotes: 10,
+    views: 100,
+    answers: [],
+    createdAt: new Date('2023-08-23T12:00:00.00Z')
+  },
+  {
+    _id: '4',
+    title: 'Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?',
+    tags: [
+      {_id: '1', name: 'nextjs'},
+      {_id: '7', name: 'ssr'}
+    ],
+    author: {
+      _id: '4',
+      name: 'Bob Wilson',
+      picture: 'profile.jpg'
+    },
+    upVotes: 10,
+    views: 100,
+    answers: [],
+    createdAt: new Date('2023-08-23T12:00:00.00Z')
+  },
+  {
+    _id: '5',
+    title: 'Redux Toolkit Not Updating State as Expected',
+    tags: [
+      {_id: '8', name: 'redux'}
+    ],
+    author: {
+      _id: '5',
+      name: 'Eve Brown',
+      picture: 'profile.jpg'
+    },
+    upVotes: 1245,
+    views: 100,
+    answers: [],
+    createdAt: new Date('2023-08-23T12:00:00.00Z')
+  }
 ]
 
 export const popularTags = [
-  {_id: 1, name: 'javascript', totalQuestions: 5},
-  {_id: 2, name: 'react', totalQuestions: 5},
-  {_id: 3, name: 'next', totalQuestions: 5},
-  {_id: 4, name: 'vue', totalQuestions: 2},
-  {_id: 5, name: 'redux', totalQuestions: 10}
+  {_id: '1', name: 'javascript', totalQuestions: 5},
+  {_id: '2', name: 'react', totalQuestions: 5},
+  {_id: '3', name: 'next', totalQuestions: 5},
+  {_id: '4', name: 'vue', totalQuestions: 2},
+  {_id: '5', name: 'redux', totalQuestions: 10}
 ]
 
 export const filters = [

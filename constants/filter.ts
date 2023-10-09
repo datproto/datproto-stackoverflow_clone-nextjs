@@ -27,10 +27,10 @@ export const TagFilters = [
 ]
 
 export const HomePageFilters = [
-  {name: 'Newest', value: 'newest'},
-  {name: 'Recommended', value: 'recommended'},
-  {name: 'Frequent', value: 'frequent'},
-  {name: 'Unanswered', value: 'unanswered'}
+  {_id: '1', name: 'Newest', value: 'newest'},
+  {_id: '2', name: 'Recommended', value: 'recommended'},
+  {_id: '3', name: 'Frequent', value: 'frequent'},
+  {_id: '4', name: 'Unanswered', value: 'unanswered'}
 ]
 
 export const GlobalSearchFilters = [
