@@ -14,7 +14,7 @@ import {Editor} from '@tinymce/tinymce-react'
 import {Badge} from '@/components/ui/badge'
 import Image from 'next/image'
 import {createQuestion} from '@/lib/actions/question.action'
-import {useRouter} from 'next/navigation'
+import {usePathname, useRouter} from 'next/navigation'
 
 const type: string = 'create'
 
@@ -26,7 +26,7 @@ const Question = ({mongoUserId}: IQuestion) => {
   const editorRef = useRef(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
-  // const pathname = usePathname()
+  const pathname = usePathname()
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof questionSchema>>({
@@ -49,7 +49,8 @@ const Question = ({mongoUserId}: IQuestion) => {
         title: values.title,
         content: values.explanation,
         tags: values.tags,
-        author: JSON.parse(mongoUserId)
+        author: JSON.parse(mongoUserId),
+        path: pathname
       })
 
       // STEP 2: Navigate to Home page
