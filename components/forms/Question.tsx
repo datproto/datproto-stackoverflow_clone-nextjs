@@ -14,12 +14,19 @@ import {Editor} from '@tinymce/tinymce-react'
 import {Badge} from '@/components/ui/badge'
 import Image from 'next/image'
 import {createQuestion} from '@/lib/actions/question.action'
+import {useRouter} from 'next/navigation'
 
 const type: string = 'create'
 
-const Question = () => {
+interface IQuestion {
+  mongoUserId: string
+}
+
+const Question = ({mongoUserId}: IQuestion) => {
   const editorRef = useRef(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const router = useRouter()
+  // const pathname = usePathname()
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof questionSchema>>({
@@ -38,8 +45,15 @@ const Question = () => {
     try {
       // STEP 1: Make an async call to your API -> Create a question
       //          contain all form data
-      await createQuestion({})
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId)
+      })
+
       // STEP 2: Navigate to Home page
+      router.push('/')
     } catch (e) {
 
     } finally {
@@ -64,7 +78,6 @@ const Question = () => {
 
         if (!field.value.includes(tagValue as never)) {
           form.setValue('tags', [...field.value, tagValue])
-          console.log(form)
 
           tagInput.value = ''
 
