@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import {Button} from '@/components/ui/button'
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar'
@@ -7,11 +5,13 @@ import Tag from '@/components/shared/Tag'
 import FilterDropdown from '@/components/shared/filter/FilterDropdown'
 import {HomePageFilters} from '@/constants/filter'
 import React from 'react'
-import {questions} from '@/constants'
 import NoResult from '@/components/shared/NoResult'
 import QuestionCard from '@/components/cards/QuestionCard'
+import {getQuestions} from '@/lib/actions/question.action'
 
-export default function Home() {
+export default async function Home() {
+  const result = await getQuestions({})
+
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -55,7 +55,7 @@ export default function Home() {
 
       <div className="mt-10 flex w-full flex-col gap-6">
         {/* Looping through questions */}
-        {questions.length > 0 ? questions.map(q => (
+        {result.questions.length > 0 ? result.questions.map(q => (
           <QuestionCard
             key={q._id}
             _id={q._id}
@@ -65,7 +65,7 @@ export default function Home() {
             upVotes={q.upVotes}
             views={q.views}
             answers={q.answers}
-            createdAt={q.createdAt}
+            createdAt={q.createdDate}
           />
         )) : (
           <NoResult
