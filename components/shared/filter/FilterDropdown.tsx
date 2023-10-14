@@ -29,7 +29,7 @@ const FilterDropdown = ({
 
         </SelectTrigger>
         <SelectContent>
-          <SelectGroup>
+          <SelectGroup className="text-dark500_light700 background-light800_dark300">
             {filters.map(filter => (
               <SelectItem key={filter.value} value={filter.value}>{filter.name}</SelectItem>
             ))}

@@ -6,9 +6,9 @@ export const AnswerFilters = [
 ]
 
 export const UserFilters = [
-  {name: 'New Users', value: 'new_users'},
-  {name: 'Old Users', value: 'old_users'},
-  {name: 'Top Contributors', value: 'top_contributors'}
+  {_id: '1', name: 'New Users', value: 'new_users'},
+  {_id: '2', name: 'Old Users', value: 'old_users'},
+  {_id: '3', name: 'Top Contributors', value: 'top_contributors'}
 ]
 
 export const QuestionFilters = [
