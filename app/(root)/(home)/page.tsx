@@ -65,7 +65,7 @@ export default async function Home() {
             upVotes={q.upVotes}
             views={q.views}
             answers={q.answers}
-            createdAt={q.createdDate}
+            createdAt={q.createdAt}
           />
         )) : (
           <NoResult

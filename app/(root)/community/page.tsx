@@ -6,6 +6,7 @@ import {UserFilters} from '@/constants/filter'
 import FilterDropdown from '@/components/shared/filter/FilterDropdown'
 import {getAllUsers} from '@/lib/actions/user.action'
 import UserCard from '@/components/cards/UserCard'
+import NoResult from '@/components/shared/NoResult'
 
 const Page = async () => {
   const result = await getAllUsers({})
@@ -44,14 +45,8 @@ const Page = async () => {
             <UserCard key={u._id} user={u}/>
           ))
         ) : (
-          <div className="paragraph-regular text-dark200_light800 mx-auto max-w-4xl text-center">
-            <p>
-              No User left
-            </p>
-            <Link href="/sign-up" className="mt-1 font-bold text-accent-blue">
-              Join to be the first!
-            </Link>
-          </div>
+          <NoResult title="No Users Found" description="It looks like there are no users found." link="/sign-up"
+                    linkTitle="Join to be the first!"/>
         )}
       </section>
 
