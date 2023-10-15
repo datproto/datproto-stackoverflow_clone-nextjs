@@ -9,7 +9,6 @@ export interface IQuestion extends Document {
   upVotes: Schema.Types.ObjectId[]
   downVotes: Schema.Types.ObjectId[]
   answers: Schema.Types.ObjectId[]
-  createdDate: string
 }
 
 const QuestionSchema = new Schema({
@@ -20,8 +19,9 @@ const QuestionSchema = new Schema({
   views: {type: Number, default: 0},
   upVotes: {type: Number, default: 0, ref: 'User'},
   downVotes: {type: Number, default: 0, ref: 'User'},
-  answers: [{type: Schema.Types.ObjectId, ref: 'Answer'}], //  // Establishing a one-to-many relationship with the Answer model
-  createdDate: {type: Date, default: Date.now}
+  answers: [{type: Schema.Types.ObjectId, ref: 'Answer'}] //  // Establishing a one-to-many relationship with the Answer model
+}, {
+  timestamps: true
 })
 
 const Question = models.Question || model('Question', QuestionSchema)
