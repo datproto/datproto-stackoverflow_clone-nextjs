@@ -5,6 +5,11 @@ import Image from 'next/image'
 import Metric from '@/components/shared/Metric'
 import {formatBigNumber, getTimeStamp} from '@/lib/utils'
 import ParseHTML from '@/components/shared/ParseHTML'
+import Tag from '@/components/shared/Tag'
+import Answer from '@/components/forms/Answer'
+import {auth} from '@clerk/nextjs'
+import {getUserById} from '@/lib/actions/user.action'
+import AllAnswers from '@/components/shared/AllAnswers'
 
 const Page = async ({
                       params,
@@ -15,6 +20,16 @@ const Page = async ({
 }) => {
   const questionId = params.id
   const result = await getQuestionById({questionId})
+
+  const {userId: clerkId} = auth()
+
+  let mongoUser
+
+  if (clerkId) {
+    mongoUser = await getUserById({
+      userId: clerkId
+    })
+  }
 
   const {question} = result
 
@@ -65,6 +80,29 @@ const Page = async ({
       </div>
 
       <ParseHTML data={question.content}/>
+
+      <div className="mt-8 flex flex-wrap gap-2">
+        {question.tags.map((t: any) => (
+          <Tag
+            key={t._id}
+            _id={t._id}
+            text={t.name}
+            showCount={false}
+          />
+        ))}
+      </div>
+
+      <AllAnswers
+        questionId={question._id}
+        userId={JSON.stringify(mongoUser._id)}
+        totalAnswers={question.answers.length}
+      />
+
+      <Answer
+        question={question.content}
+        questionId={JSON.stringify(question._id)}
+        authorId={JSON.stringify(mongoUser._id)}
+      />
     </>
   )
 }
