@@ -1,9 +1,10 @@
 'use client'
-import React, {useState} from 'react'
+import React from 'react'
 import Image from 'next/image'
 import {formatBigNumber} from '@/lib/utils'
 import {downVoteAnswer, downvoteQuestion, upVoteAnswer, upvoteQuestion} from '@/lib/actions/vote.action'
 import {usePathname} from 'next/navigation'
+import {toggleSaveQuestion} from '@/lib/actions/question.action'
 
 interface VoteProps {
   type: 'question' | 'answer';
@@ -27,17 +28,8 @@ const Votes: React.FC<VoteProps> = ({
                                       hasSaved
                                     }) => {
   const path = usePathname()
-  const [isUpVoted, setIsUpVoted] = useState(hasUpVoted)
-  const [isDownVoted, setIsDownVoted] = useState(hasDownVoted)
 
   const handleVote = async (action: string) => {
-    if (isDownVoted) {
-      setIsDownVoted(false)
-      // Implement logic to update the downvote on the server
-    }
-
-    setIsUpVoted(!isUpVoted)
-    // Implement logic to update the upvote on the server
     if (action === 'upVote') {
       if (type === 'question') {
         await upvoteQuestion({
@@ -83,8 +75,13 @@ const Votes: React.FC<VoteProps> = ({
     }
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // Implement logic to toggle the save state on the server
+    await toggleSaveQuestion({
+      questionId: JSON.parse(itemId),
+      userId: JSON.parse(userId),
+      path
+    })
   }
 
   return (
@@ -115,10 +112,10 @@ const Votes: React.FC<VoteProps> = ({
       </div>
 
       {type === 'question' && (
-        <Image src={hasSaved ? '/assets/icons/star-filled.svg' : '/assets/icons/star-red.svg'} alt="downvote"
+        <Image src={hasSaved ? '/assets/icons/star-filled.svg' : '/assets/icons/star-red.svg'} alt="save"
                width={18}
                height={18} className="cursor-pointer"
-               onClick={handleSave}
+               onClick={() => handleSave()}
         />
       )}
     </div>
