@@ -10,6 +10,7 @@ import Answer from '@/components/forms/Answer'
 import {auth} from '@clerk/nextjs'
 import {getUserById} from '@/lib/actions/user.action'
 import AllAnswers from '@/components/shared/AllAnswers'
+import Votes from '@/components/shared/Votes'
 
 const Page = async ({
                       params,
@@ -46,7 +47,16 @@ const Page = async ({
           </Link>
 
           <div className="flex justify-end">
-            VOTING
+            <Votes
+              type="question"
+              itemId={JSON.stringify(question._id)}
+              userId={JSON.stringify(mongoUser._id)}
+              upVotes={question.upVotes.length}
+              hasUpVoted={question.upVotes.includes(mongoUser._id)}
+              downVotes={question.downVotes.length}
+              hasDownVoted={question.downVotes.includes(mongoUser._id)}
+              hasSaved={mongoUser.saved.includes(question._id)}
+            />
           </div>
         </div>
 
@@ -94,7 +104,7 @@ const Page = async ({
 
       <AllAnswers
         questionId={question._id}
-        userId={JSON.stringify(mongoUser._id)}
+        userId={mongoUser._id}
         totalAnswers={question.answers.length}
       />
 

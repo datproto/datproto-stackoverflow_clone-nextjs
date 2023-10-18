@@ -17,8 +17,8 @@ const QuestionSchema = new Schema({
   author: {type: Schema.Types.ObjectId, ref: 'User', required: true}, // Establishing a one-to-many relationship with the User model
   tags: [{type: Schema.Types.ObjectId, ref: 'Tag'}], // Establishing a one-to-many relationship with the Tag model
   views: {type: Number, default: 0},
-  upVotes: {type: Number, default: 0, ref: 'User'},
-  downVotes: {type: Number, default: 0, ref: 'User'},
+  upVotes: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  downVotes: [{type: Schema.Types.ObjectId, ref: 'User'}],
   answers: [{type: Schema.Types.ObjectId, ref: 'Answer'}] //  // Establishing a one-to-many relationship with the Answer model
 }, {
   timestamps: true
