@@ -16,7 +16,7 @@ interface IQuestionCard {
     name: string
     picture: string
   }
-  upVotes: number
+  upVotes: Array<Object>
   views: number
   answers: Array<Object>
   createdAt: Date
@@ -66,7 +66,7 @@ const QuestionCard = ({
         <Metric
           imgUrl="/assets/icons/like.svg"
           alt="Upvotes"
-          value={formatBigNumber(upVotes)}
+          value={formatBigNumber(upVotes.length)}
           title=" Votes"
           textStyles="small-medium text-dark400_light800"
         />
@@ -81,7 +81,7 @@ const QuestionCard = ({
           imgUrl="/assets/icons/eye.svg"
           alt="Eye"
           value={formatBigNumber(views)}
-          title=" Votes"
+          title=" Views"
           textStyles="small-medium text-dark400_light800"
         />
       </div>
