@@ -3,7 +3,12 @@
 import {connectToDatabase} from '@/lib/mongoose'
 import Question from '@/lib/models/question.model'
 import Tag from '@/lib/models/tag.model'
-import {CreateQuestionParams, GetQuestionByIdParams, GetQuestionsParams} from '@/lib/shared.types'
+import {
+  CreateQuestionParams,
+  GetQuestionByIdParams,
+  GetQuestionsParams,
+  ToggleSaveQuestionParams
+} from '@/lib/shared.types'
 import User from '@/lib/models/user.model'
 import {revalidatePath} from 'next/cache'
 
@@ -73,6 +78,39 @@ export async function getQuestionById(params: GetQuestionByIdParams) {
       .populate({path: 'author', model: User, select: '_id clerkId name picture'})
 
     return {question}
+  } catch (e) {
+    console.log(e)
+    throw e
+  }
+}
+
+export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
+  try {
+    const {questionId, userId, path} = params
+
+    const isQuestionSaved = await User.find({
+      $expr: {
+        $in: [questionId, '$saved']
+      }
+    })
+
+    let updateQuery
+    if (isQuestionSaved.length > 0) {
+      updateQuery = {$pull: {saved: questionId}}
+    } else {
+      updateQuery = {$push: {saved: questionId}}
+    }
+
+    const updateUser = await User.findByIdAndUpdate(
+      userId,
+      updateQuery
+    )
+
+    if (!updateUser) {
+      throw new Error('Cannot find the user')
+    }
+
+    revalidatePath(path)
   } catch (e) {
     console.log(e)
     throw e
