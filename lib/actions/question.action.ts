@@ -1,5 +1,6 @@
 'use server'
 
+import {FilterQuery} from 'mongoose'
 import {connectToDatabase} from '@/lib/mongoose'
 import Question from '@/lib/models/question.model'
 import Tag from '@/lib/models/tag.model'
@@ -7,6 +8,7 @@ import {
   CreateQuestionParams,
   GetQuestionByIdParams,
   GetQuestionsParams,
+  GetSavedQuestionsParams,
   ToggleSaveQuestionParams
 } from '@/lib/shared.types'
 import User from '@/lib/models/user.model'
@@ -111,6 +113,52 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
     }
 
     revalidatePath(path)
+  } catch (e) {
+    console.log(e)
+    throw e
+  }
+}
+
+export async function getSavedQuestions(params: GetSavedQuestionsParams) {
+  try {
+    await connectToDatabase()
+
+    const {clerkId, page = 1, pageSize = 10, filter, searchQuery} = params
+
+    const query: FilterQuery<typeof Question> = searchQuery
+      ? {title: {$regex: new RegExp(searchQuery, 'i')}}
+      : {}
+    const user = await User.findOne({
+      clerkId
+    }).populate(
+      {
+        path: 'saved',
+        match: query,
+        options: {
+          sort: {createdAt: -1}
+        },
+        populate: [
+          {
+            path: 'tags',
+            model: Tag,
+            select: '_id name'
+          },
+          {
+            path: 'author',
+            model: User,
+            select: '_id clerkId name picture'
+          }
+        ]
+      }
+    )
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    const savedQuestion = user.saved
+
+    return {questions: savedQuestion}
   } catch (e) {
     console.log(e)
     throw e
