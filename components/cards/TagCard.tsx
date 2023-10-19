@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 interface ITagCard {
   tag: {
@@ -16,7 +17,7 @@ interface ITagCard {
 
 const TagCard = ({tag}: ITagCard) => {
   return (
-    <div key={tag._id} className="shadow-light100_darknone w-full max-xs:min-w-full xs:w-[260px]">
+    <Link href={`/tags/${tag._id}`} key={tag._id} className="shadow-light100_darknone w-full max-xs:min-w-full xs:w-[260px]">
       <article
         key={tag._id}
         className="background-light900_dark200 light-border flex w-full flex-col items-start justify-center gap-4 rounded-2xl border px-8 py-10">
@@ -36,7 +37,7 @@ const TagCard = ({tag}: ITagCard) => {
                     className="body-semibold primary-text-gradient text-xs">{tag.questions.length}+</span> Question{tag.questions.length > 1 ? 's' : ''}
         </p>
       </article>
-    </div>
+    </Link>
   )
 }
 

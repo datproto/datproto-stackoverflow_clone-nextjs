@@ -9,6 +9,8 @@ export interface IQuestion extends Document {
   upVotes: Schema.Types.ObjectId[]
   downVotes: Schema.Types.ObjectId[]
   answers: Schema.Types.ObjectId[]
+  createdAt: Date
+  updatedAt?: Date
 }
 
 const QuestionSchema = new Schema({
