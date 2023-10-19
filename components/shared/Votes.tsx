@@ -1,10 +1,11 @@
 'use client'
-import React from 'react'
+import React, {useEffect} from 'react'
 import Image from 'next/image'
 import {formatBigNumber} from '@/lib/utils'
 import {downVoteAnswer, downvoteQuestion, upVoteAnswer, upvoteQuestion} from '@/lib/actions/vote.action'
-import {usePathname} from 'next/navigation'
+import {usePathname, useRouter} from 'next/navigation'
 import {toggleSaveQuestion} from '@/lib/actions/question.action'
+import {viewQuestion} from '@/lib/actions/interaction.action'
 
 interface VoteProps {
   type: 'question' | 'answer';
@@ -28,6 +29,7 @@ const Votes: React.FC<VoteProps> = ({
                                       hasSaved
                                     }) => {
   const path = usePathname()
+  const router = useRouter()
 
   const handleVote = async (action: string) => {
     if (action === 'upVote') {
@@ -83,6 +85,15 @@ const Votes: React.FC<VoteProps> = ({
       path
     })
   }
+
+  useEffect(() => {
+    viewQuestion({
+      questionId: JSON.parse(itemId),
+      userId: userId ? JSON.parse(userId) : undefined
+    })
+
+    router.refresh()
+  }, [itemId, userId, path, router])
 
   return (
     <div className="flex gap-4">
