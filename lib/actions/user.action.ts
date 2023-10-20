@@ -2,17 +2,30 @@
 
 import {connectToDatabase} from '@/lib/mongoose'
 import User from '@/lib/models/user.model'
-import {CreateUserParams, DeleteUserParams, GetAllUsersParams, UpdateUserParams} from '@/lib/shared.types'
+import {
+  CreateUserParams,
+  DeleteUserParams,
+  GetAllUsersParams,
+  GetUserByIdParams,
+  UpdateUserParams
+} from '@/lib/shared.types'
 import {revalidatePath} from 'next/cache'
 import Question from '@/lib/models/question.model'
+import Answer from '@/lib/models/answer.model'
 
-export async function getUserById(params: any) {
+export async function getUserById(params: GetUserByIdParams) {
   try {
     await connectToDatabase()
 
     const {userId} = params
 
-    return await User.findOne({clerkId: userId})
+    const user = await User.findOne({clerkId: userId})
+
+    if(!user) {
+      throw new Error('User not found')
+    }
+
+    return user
   } catch (e) {
     console.log(e)
     throw e
@@ -86,6 +99,27 @@ export async function getAllUsers(params: GetAllUsersParams) {
 
 
     return {users}
+  } catch (e) {
+    console.log(e)
+    throw e
+  }
+}
+
+export async function getUserInfo(params: GetUserByIdParams) {
+  try {
+    await connectToDatabase()
+
+    const user = await getUserById({userId: params.userId})
+
+    const totalQuestions = await Question.countDocuments({authors: user._id})
+    const totalAnswers = await Answer.countDocuments({authors: user._id})
+
+    return {
+      user,
+      totalQuestions,
+      totalAnswers
+    }
+
   } catch (e) {
     console.log(e)
     throw e
