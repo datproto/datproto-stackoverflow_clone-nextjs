@@ -3,9 +3,12 @@ import Link from 'next/link'
 import Tag from '@/components/shared/Tag'
 import Metric from '@/components/shared/Metric'
 import {formatBigNumber, getTimeStamp} from '@/lib/utils'
+import Image from 'next/image'
+import {Button} from '@/components/ui/button'
 
 interface IQuestionCard {
   _id: string
+  clerkId?: string | null
   title: string
   tags: {
     _id: string
@@ -13,6 +16,7 @@ interface IQuestionCard {
   }[]
   author: {
     _id: string,
+    clerkId: string
     name: string
     picture: string
   }
@@ -24,6 +28,7 @@ interface IQuestionCard {
 
 const QuestionCard = ({
                         _id,
+                        clerkId,
                         title,
                         tags,
                         author,
@@ -32,8 +37,12 @@ const QuestionCard = ({
                         answers,
                         createdAt
                       }: IQuestionCard) => {
+  // const handleDeletePost = () => {
+  //   console.log('Gonna delete this post: ' + _id)
+  // }
+
   return (
-    <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
+    <div className="card-wrapper shadow-light100_dark100 light-border rounded-[10px] border p-9 sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
         <div>
           <span
@@ -44,6 +53,17 @@ const QuestionCard = ({
             </h3>
           </Link>
         </div>
+
+        {clerkId && clerkId === author.clerkId && (
+          <div className='flex shrink-0 items-center gap-3'>
+            <Link href={`/questions/${_id}/edit`}>
+              <Image src='/assets/icons/edit.svg' alt='Edit Icon' width={14} height={14} />
+            </Link>
+            <Button type='button' className='h-0 p-0'>
+              <Image src='/assets/icons/trash.svg' alt='Edit Icon' width={14} height={14} />
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* If signed in add edit / delete actions */}

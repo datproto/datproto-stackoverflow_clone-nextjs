@@ -9,8 +9,10 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {getJoinedDate} from '@/lib/utils'
 import ProfileLink from '@/components/shared/ProfileLink'
 import UserStats from '@/components/shared/Stats'
+import QuestionTab from '@/components/shared/QuestionTab'
+import AnswerTab from '@/components/shared/sidebar/AnswerTab'
 
-const Page = async ({params}: URLProps) => {
+const Page = async ({params, searchParams}: URLProps) => {
   const userInfo = await getUserInfo({userId: params.id})
   const {userId: clerkId} = auth()
 
@@ -63,7 +65,7 @@ const Page = async ({params}: URLProps) => {
           <SignedIn>
             {clerkId === userInfo.user.clerkId && (
               <Link href='/profile/edit'>
-                <Button className='paragraph-medium btn-secondary text-dark300_light900 min-h-[46px] min-w-[175px] px-4 py-3'>
+                <Button className='paragraph-medium btn-secondary text-dark300_light900 min-h-[46px] min-w-[175px] px-4 py-3 shadow transition-colors'>
                   Edit Profile
                 </Button>
               </Link>
@@ -83,8 +85,12 @@ const Page = async ({params}: URLProps) => {
             <TabsTrigger value="top-posts" className='tab'>Top Posts</TabsTrigger>
             <TabsTrigger value="answers" className='tab'>Answers</TabsTrigger>
           </TabsList>
-          <TabsContent value="top-posts">Make changes to your account here.</TabsContent>
-          <TabsContent value="answers">Change your password here.</TabsContent>
+          <TabsContent value="top-posts" className='flex flex-col gap-6'>
+            <QuestionTab userId={userInfo.user._id} searchParams={searchParams} clerkId={clerkId} />
+          </TabsContent>
+          <TabsContent value="answers" className='flex flex-col gap-6'>
+            <AnswerTab userId={userInfo.user._id} searchParams={searchParams} clerkId={clerkId} />
+          </TabsContent>
         </Tabs>
 
       </div>

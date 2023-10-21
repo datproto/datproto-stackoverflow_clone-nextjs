@@ -38,8 +38,8 @@ export default async function Home() {
         {/* Looping through questions */}
         {result.questions.length > 0 ? result.questions.map((q: any) => (
           <QuestionCard
-            key={q._id}
-            _id={q._id}
+            key={JSON.stringify(q._id)}
+            _id={JSON.stringify(q._id)}
             title={q.title}
             tags={q.tags}
             author={q.author}

@@ -8,11 +8,12 @@ import {
   CreateQuestionParams,
   GetQuestionByIdParams,
   GetQuestionsParams,
-  GetSavedQuestionsParams,
+  GetSavedQuestionsParams, GetUserByIdParams, GetUserStatsParams,
   ToggleSaveQuestionParams
 } from '@/lib/shared.types'
 import User from '@/lib/models/user.model'
 import {revalidatePath} from 'next/cache'
+import Answer from '@/lib/models/answer.model'
 
 export async function createQuestion(params: CreateQuestionParams) {
   try {
@@ -159,6 +160,28 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
     const savedQuestion = user.saved
 
     return {questions: savedQuestion}
+  } catch (e) {
+    console.log(e)
+    throw e
+  }
+}
+
+export async function getQuestionsByUser(params: GetUserStatsParams) {
+  try {
+    await connectToDatabase()
+
+    const {page = 1, pageSize = 10, userId} = params
+
+    const totalQuestions = await Question.countDocuments({author: userId})
+
+    const questions = await Question.find(
+      {author: userId}
+    )
+      .sort({views: -1, upVotes: -1})
+      .populate({path: 'tags', model: Tag})
+      .populate('author', '_id clerkId name picture')
+
+    return {totalQuestions, questions}
   } catch (e) {
     console.log(e)
     throw e
