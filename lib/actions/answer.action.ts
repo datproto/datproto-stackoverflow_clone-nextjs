@@ -1,10 +1,12 @@
 'use server'
 
-import {CreateAnswerParams, GetAnswersParams} from '@/lib/shared.types'
+import {CreateAnswerParams, GetAnswersParams, GetUserStatsParams} from '@/lib/shared.types'
 import {connectToDatabase} from '@/lib/mongoose'
 import {revalidatePath} from 'next/cache'
 import Answer from '@/lib/models/answer.model'
 import Question from '@/lib/models/question.model'
+import Tag from '@/lib/models/tag.model'
+import User from '@/lib/models/user.model'
 
 export async function createAnswer(params: CreateAnswerParams) {
   try {
@@ -42,6 +44,28 @@ export async function getAnswers(params: GetAnswersParams) {
       .sort({createdAt: -1})
 
     return {answers}
+  } catch (e) {
+    console.log(e)
+    throw e
+  }
+}
+
+export async function getAnswersByUser(params: GetUserStatsParams) {
+  try {
+    await connectToDatabase()
+
+    const {page = 1, pageSize = 10, userId} = params
+
+    const totalAnswers = await Answer.countDocuments({author: userId})
+
+    const answers = await Answer.find(
+      {author: userId}
+    )
+      .sort({upVotes: -1})
+      .populate('question', '_id title')
+      .populate('author', '_id clerkId name picture')
+
+    return {totalAnswers, answers}
   } catch (e) {
     console.log(e)
     throw e

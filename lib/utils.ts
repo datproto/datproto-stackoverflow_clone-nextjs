@@ -46,4 +46,13 @@ export const formatBigNumber = (num: number): string => {
   }
 }
 
+export const getJoinedDate = (inputDate: Date): string => {
+  // Get the month and year from the inputDate
+  const month = inputDate.toLocaleString('default', {month: 'long'}) // Month is zero-based, so add 1
+  const year = inputDate.getFullYear();
 
+  // Create a formatted string for the joined date (e.g., "10/2023" for October 2023)
+  const joinedDate = `${month} ${year}`;
+
+  return joinedDate;
+}
