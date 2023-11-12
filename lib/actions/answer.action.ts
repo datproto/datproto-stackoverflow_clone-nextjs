@@ -61,7 +61,7 @@ export async function getAnswersByUser(params: GetUserStatsParams) {
     const answers = await Answer.find(
       {author: userId}
     )
-      .sort({views: -1, upVotes: -1})
+      .sort({upVotes: -1})
       .populate('question', '_id title')
       .populate('author', '_id clerkId name picture')
 

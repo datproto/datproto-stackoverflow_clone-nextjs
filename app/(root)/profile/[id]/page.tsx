@@ -10,7 +10,7 @@ import {getJoinedDate} from '@/lib/utils'
 import ProfileLink from '@/components/shared/ProfileLink'
 import UserStats from '@/components/shared/Stats'
 import QuestionTab from '@/components/shared/QuestionTab'
-import AnswerTab from '@/components/shared/sidebar/AnswerTab'
+import AnswerTab from '@/components/shared/AnswerTab'
 
 const Page = async ({params, searchParams}: URLProps) => {
   const userInfo = await getUserInfo({userId: params.id})
