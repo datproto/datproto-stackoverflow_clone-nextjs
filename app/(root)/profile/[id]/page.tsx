@@ -1,20 +1,21 @@
 import React from 'react'
-import {URLProps} from '@/types'
-import {getUserInfo} from '@/lib/actions/user.action'
+import { URLProps } from '@/types'
+import { getUserInfo } from '@/lib/actions/user.action'
 import Image from 'next/image'
-import {auth, SignedIn} from '@clerk/nextjs'
+import { SignedIn } from '@clerk/nextjs'
+import { auth } from '@clerk/nextjs/server'
 import Link from 'next/link'
-import {Button} from '@/components/ui/button'
-import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
-import {getJoinedDate} from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { getJoinedDate } from '@/lib/utils'
 import ProfileLink from '@/components/shared/ProfileLink'
 import UserStats from '@/components/shared/Stats'
 import QuestionTab from '@/components/shared/QuestionTab'
 import AnswerTab from '@/components/shared/AnswerTab'
 
-const Page = async ({params, searchParams}: URLProps) => {
-  const userInfo = await getUserInfo({userId: params.id})
-  const {userId: clerkId} = auth()
+const Page = async ({ params, searchParams }: URLProps) => {
+  const userInfo = await getUserInfo({ userId: params.id })
+  const { userId: clerkId } = await auth()
 
   return (
     <>
@@ -58,7 +59,7 @@ const Page = async ({params, searchParams}: URLProps) => {
               )}
             </div>
           </div>
-          
+
         </div>
 
         <div className="flex justify-end max-sm:mb-5 max-sm:w-full sm:mt-3">

@@ -1,28 +1,28 @@
 import React from 'react'
-import {getQuestionById} from '@/lib/actions/question.action'
+import { getQuestionById } from '@/lib/actions/question.action'
 import Link from 'next/link'
 import Image from 'next/image'
 import Metric from '@/components/shared/Metric'
-import {formatBigNumber, getTimeStamp} from '@/lib/utils'
+import { formatBigNumber, getTimeStamp } from '@/lib/utils'
 import ParseHTML from '@/components/shared/ParseHTML'
 import Tag from '@/components/shared/Tag'
 import Answer from '@/components/forms/Answer'
-import {auth} from '@clerk/nextjs'
-import {getUserById} from '@/lib/actions/user.action'
+import { auth } from '@clerk/nextjs/server'
+import { getUserById } from '@/lib/actions/user.action'
 import AllAnswers from '@/components/shared/AllAnswers'
 import Votes from '@/components/shared/Votes'
 
 const Page = async ({
-                      params,
-                      searchParams
-                    }: {
+  params,
+  searchParams
+}: {
   params: { id: string };
   searchParams?: { [key: string]: string | string[] | undefined };
 }) => {
   const questionId = params.id
-  const result = await getQuestionById({questionId})
+  const result = await getQuestionById({ questionId })
 
-  const {userId: clerkId} = auth()
+  const { userId: clerkId } = await auth()
 
   let mongoUser
 
@@ -32,7 +32,7 @@ const Page = async ({
     })
   }
 
-  const {question} = result
+  const { question } = result
 
   return (
     <>
@@ -41,7 +41,7 @@ const Page = async ({
       >
         <div className="flex w-full flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
           <Link href={`/profile/${question.author.clerkId}`} className="flex items-center justify-start gap-1">
-            <Image src={question.author.picture} alt="Author avatar" width={22} height={22} className="rounded-full"/>
+            <Image src={question.author.picture} alt="Author avatar" width={22} height={22} className="rounded-full" />
 
             <p className="paragraph-semibold text-dark300_light700">{question.author.name}</p>
           </Link>
@@ -89,7 +89,7 @@ const Page = async ({
         />
       </div>
 
-      <ParseHTML data={question.content}/>
+      <ParseHTML data={question.content} />
 
       <div className="mt-8 flex flex-wrap gap-2">
         {question.tags.map((t: any) => (
