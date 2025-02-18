@@ -1,14 +1,14 @@
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar'
 import FilterDropdown from '@/components/shared/filter/FilterDropdown'
-import {QuestionFilters} from '@/constants/filter'
+import { QuestionFilters } from '@/constants/filter'
 import React from 'react'
 import NoResult from '@/components/shared/NoResult'
 import QuestionCard from '@/components/cards/QuestionCard'
-import {getSavedQuestions} from '@/lib/actions/question.action'
-import {auth} from '@clerk/nextjs'
+import { getSavedQuestions } from '@/lib/actions/question.action'
+import { auth } from '@clerk/nextjs/server'
 
 export default async function Home() {
-  const {userId} = auth()
+  const { userId } = await auth()
 
   if (!userId) return null
 
