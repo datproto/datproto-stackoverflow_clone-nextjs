@@ -104,7 +104,7 @@ const Votes: React.FC<VoteProps> = ({
                  onClick={() => handleVote('upVote')}
           />
 
-          <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
+          <div className="flex-center background-light700_dark400 min-w-[18px] rounded-xs p-1">
             <p className="subtle-medium text-dark400_light900">{formatBigNumber(upVotes)}</p>
           </div>
         </div>
@@ -116,7 +116,7 @@ const Votes: React.FC<VoteProps> = ({
                  onClick={() => handleVote('downVote')}
           />
 
-          <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
+          <div className="flex-center background-light700_dark400 min-w-[18px] rounded-xs p-1">
             <p className="subtle-medium text-dark400_light900">{formatBigNumber(downVotes)}</p>
           </div>
         </div>

@@ -30,7 +30,7 @@ const LocalSearchbar = ({route, iconPosition, imgSrc, placeholder, customClass}:
         placeholder={placeholder}
         value={inputValue}
         onChange={handleChange}
-        className={`paragraph-regular no-focus placeholder text-dark400_light700 border-none bg-transparent shadow-none outline-none ${customClass}`}
+        className={`paragraph-regular no-focus placeholder text-dark400_light700 border-none bg-transparent shadow-none outline-hidden ${customClass}`}
       />
     </div>
   )

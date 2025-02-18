@@ -223,7 +223,7 @@ const Question = ({mongoUserId}: IQuestion) => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="primary-gradient w-fit !text-light-900" disabled={isSubmitting}>
+        <Button type="submit" className="primary-gradient w-fit text-light-900!" disabled={isSubmitting}>
           {isSubmitting ? (
             <>
               {type === 'edit' ? 'Editing ....' : 'Posting ...'}

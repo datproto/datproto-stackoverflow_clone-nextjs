@@ -14,7 +14,7 @@ const Tag = ({_id, text, showCount, totalQuestions, customClass}: ITags) => {
   return (
     <Link href={`/tags/${_id}`} className="flex justify-between gap-2">
       <Badge
-        className="subtle-medium background-light800_dark300 text-light400_light500 rounded-md border-none px-4 py-2 uppercase shadow">
+        className="subtle-medium background-light800_dark300 text-light400_light500 rounded-md border-none px-4 py-2 uppercase shadow-sm">
         {text}
       </Badge>
 
