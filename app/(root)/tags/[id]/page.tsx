@@ -5,7 +5,6 @@ import { QuestionFilters } from '@/constants/filter'
 import QuestionCard from '@/components/cards/QuestionCard'
 import NoResult from '@/components/shared/NoResult'
 import { getQuestionsByTagId } from '@/lib/actions/tag.action'
-import { URLProps } from '@/types'
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const result = await getQuestionsByTagId({
@@ -19,7 +18,6 @@ const Page = async ({ params, searchParams }: URLProps) => {
 
       <div className="flex justify-between gap-5">
         <LocalSearchbar
-          route="/"
           placeholder="Search for questions..."
           iconPosition="left"
           imgSrc="/icons/search.svg"
@@ -36,14 +34,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
         {result.questions.length > 0 ? result.questions.map((q: any) => (
           <QuestionCard
             key={q._id}
-            _id{q._id}
-            title={q.title}
-            tags={q.tags}
-            author={q.author}
-            upVotes={q.upVotes}
-            views={q.views}
-            answers={q.answers}
-            createdAt={q.createdAt}
+            question={q}
           />
         )
         ) : (

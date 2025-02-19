@@ -5,7 +5,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { answerSchema } from '@/lib/validations'
+import { AnswerSchema } from '@/lib/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
@@ -26,19 +26,19 @@ const Answer = ({ question, questionId, authorId }: IAnswer) => {
 
   const editorRef = useRef(null)
 
-  const form = useForm<z.infer<typeof answerSchema>>({
-    resolver: zodResolver(answerSchema),
+  const form = useForm<z.infer<typeof AnswerSchema>>({
+    resolver: zodResolver(AnswerSchema),
     defaultValues: {
-      answer: ''
+      content: ''
     }
   })
 
-  const handleCreateAnswer = async (values: z.infer<typeof answerSchema>) => {
+  const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
     setIsSubmitting(true)
 
     try {
       await createAnswer({
-        content: values.answer,
+        content: values.content,
         author: JSON.parse(authorId),
         question: JSON.parse(questionId),
         path: pathname
@@ -80,7 +80,7 @@ const Answer = ({ question, questionId, authorId }: IAnswer) => {
         >
           <FormField
             control={form.control}
-            name="answer"
+            name="content"
             render={({ field }) => (
               <FormItem className="flex w-full flex-col gap-3">
                 <FormControl className="mt-3.5">

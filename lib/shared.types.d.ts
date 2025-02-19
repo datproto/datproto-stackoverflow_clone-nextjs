@@ -1,5 +1,3 @@
-import { Schema } from 'mongoose'
-
 import { IUser } from '@/mongodb'
 
 export interface CreateAnswerParams {

@@ -110,3 +110,9 @@ export const PaginatedSearchParamsSchema = z.object({
   filter: z.string().optional(),
   sort: z.string().optional(),
 });
+
+export const AnswerSchema = z.object({
+  content: z
+    .string()
+    .min(100, { message: "Answer has to have more than 100 characters." }),
+});

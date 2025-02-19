@@ -1,18 +1,17 @@
 'use client'
 
-import React, {useState} from 'react'
-import {Input} from '@/components/ui/input'
+import React, { useState } from 'react'
+import { Input } from '@/components/ui/input'
 import Image from 'next/image'
 
 interface ILocalSearchbar {
-  route: string
   iconPosition: string
   imgSrc: string
   placeholder: string
   customClass?: string
 }
 
-const LocalSearchbar = ({route, iconPosition, imgSrc, placeholder, customClass}: ILocalSearchbar) => {
+const LocalSearchbar = ({ iconPosition, imgSrc, placeholder, customClass }: ILocalSearchbar) => {
   const [inputValue, setInputValue] = useState('')
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -22,7 +21,7 @@ const LocalSearchbar = ({route, iconPosition, imgSrc, placeholder, customClass}:
     <div
       className="light-border-2 background-light800_darkgradient relative flex min-h-[56px] grow items-center gap-1 rounded-xl border px-4">
       {iconPosition === 'left' && (
-        <Image src={imgSrc} alt="search" width={24} height={24} className="cursor-pointer"/>
+        <Image src={imgSrc} alt="search" width={24} height={24} className="cursor-pointer" />
       )}
 
       <Input
