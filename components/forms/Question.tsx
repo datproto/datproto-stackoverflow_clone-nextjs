@@ -1,21 +1,21 @@
 'use client'
 
-import React, {useRef, useState} from 'react'
+import React, { useRef, useState } from 'react'
 
-import {zodResolver} from '@hookform/resolvers/zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
-import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form'
-import {Input} from '@/components/ui/input'
-import {useForm} from 'react-hook-form'
-import {Button} from '@/components/ui/button'
-import {questionSchema} from '@/lib/validations'
-import {Editor} from '@tinymce/tinymce-react'
-import {Badge} from '@/components/ui/badge'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { useForm } from 'react-hook-form'
+import { Button } from '@/components/ui/button'
+import { questionSchema } from '@/lib/validations'
+import { Editor } from '@tinymce/tinymce-react'
+import { Badge } from '@/components/ui/badge'
 import Image from 'next/image'
-import {createQuestion} from '@/lib/actions/question.action'
-import {usePathname, useRouter} from 'next/navigation'
-import {useTheme} from '@/context/ThemeProvider'
+import { createQuestion } from '@/lib/actions/question.action'
+import { usePathname, useRouter } from 'next/navigation'
+import { useTheme } from '@/context/ThemeProvider'
 
 const type: string = 'create'
 
@@ -23,8 +23,8 @@ interface IQuestion {
   mongoUserId: string
 }
 
-const Question = ({mongoUserId}: IQuestion) => {
-  const {mode} = useTheme()
+const Question = ({ mongoUserId }: IQuestion) => {
+  const { mode } = useTheme()
   const editorRef = useRef(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
@@ -105,7 +105,7 @@ const Question = ({mongoUserId}: IQuestion) => {
         <FormField
           control={form.control}
           name="title"
-          render={({field}) => (
+          render={({ field }) => (
             <FormItem className="flex w-full flex-col gap-3">
               <FormLabel className="paragraph-semibold text-dark400_light800">Question Title <span
                 className="text-primary-500">*</span></FormLabel>
@@ -128,7 +128,7 @@ const Question = ({mongoUserId}: IQuestion) => {
         <FormField
           control={form.control}
           name="explanation"
-          render={({field}) => (
+          render={({ field }) => (
             <FormItem className="flex w-full flex-col gap-3">
               <FormLabel className="paragraph-semibold text-dark400_light800">Detailed explanation of your problem <span
                 className="text-primary-500">*</span></FormLabel>
@@ -186,7 +186,7 @@ const Question = ({mongoUserId}: IQuestion) => {
         <FormField
           control={form.control}
           name="tags"
-          render={({field}) => (
+          render={({ field }) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">Tags <span
                 className="text-primary-500">*</span></FormLabel>
@@ -202,12 +202,12 @@ const Question = ({mongoUserId}: IQuestion) => {
                     <div className="flex-start mt-2.5 gap-2.5">
                       {field.value.map((tag: any) => (
                         <Badge key={tag}
-                               className="subtle-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize"
-                               onClick={() => handleTagRemove(tag, field)}
+                          className="subtle-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize"
+                          onClick={() => handleTagRemove(tag, field)}
                         >
                           {tag}
-                          <Image src="/assets/icons/close.svg" alt="close-icon" width={12} height={12}
-                                 className="cursor-pointer object-contain invert-0 dark:invert"/>
+                          <Image src="/icons/close.svg" alt="close-icon" width={12} height={12}
+                            className="cursor-pointer object-contain invert-0 dark:invert" />
                         </Badge>
                       ))}
                     </div>

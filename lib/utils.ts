@@ -1,5 +1,6 @@
-import {type ClassValue, clsx} from 'clsx'
-import {twMerge} from 'tailwind-merge'
+import { techMap } from '@/constants/techMap'
+import { type ClassValue, clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -48,7 +49,7 @@ export const formatBigNumber = (num: number): string => {
 
 export const getJoinedDate = (inputDate: Date): string => {
   // Get the month and year from the inputDate
-  const month = inputDate.toLocaleString('default', {month: 'long'}) // Month is zero-based, so add 1
+  const month = inputDate.toLocaleString('default', { month: 'long' }) // Month is zero-based, so add 1
   const year = inputDate.getFullYear();
 
   // Create a formatted string for the joined date (e.g., "10/2023" for October 2023)
@@ -56,3 +57,11 @@ export const getJoinedDate = (inputDate: Date): string => {
 
   return joinedDate;
 }
+
+export const getDeviconClassName = (techName: string) => {
+  const normalizedTechName = techName.replace(/[ .]/g, "").toLowerCase();
+
+  return techMap[normalizedTechName]
+    ? `${techMap[normalizedTechName]} colored`
+    : "devicon-devicon-plain";
+};

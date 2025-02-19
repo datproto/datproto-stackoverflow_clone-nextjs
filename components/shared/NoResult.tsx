@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import {Button} from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 
 interface INoResult {
   title: string
@@ -11,17 +11,17 @@ interface INoResult {
 }
 
 const NoResult = ({
-                    title,
-                    description,
-                    link,
-                    linkTitle
-                  }: INoResult) => {
+  title,
+  description,
+  link,
+  linkTitle
+}: INoResult) => {
   return (
     <div className="mt-10 flex w-full flex-col items-center justify-center">
-      <Image src="/assets/images/light-illustration.png" alt="no result illustration"
-             className="block object-contain dark:hidden" width={270} height={200}/>
-      <Image src="/assets/images/dark-illustration.png" alt="no result illustration"
-             className="hidden object-contain dark:flex" width={270} height={200}/>
+      <Image src="/images/light-illustration.png" alt="no result illustration"
+        className="block object-contain dark:hidden" width={270} height={200} />
+      <Image src="/images/dark-illustration.png" alt="no result illustration"
+        className="hidden object-contain dark:flex" width={270} height={200} />
 
       <h2 className="h2-bold text-dark200_light800 mt-8">{title}</h2>
 

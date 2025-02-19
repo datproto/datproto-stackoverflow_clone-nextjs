@@ -1,7 +1,7 @@
 'use server'
 
-import { connectToDatabase } from '@/lib/mongoose'
-import User from '@/lib/models/user.model'
+import dbConnect from '@/lib/mongoose'
+import User from '@/database/user.model'
 import {
   CreateUserParams,
   DeleteUserParams,
@@ -10,12 +10,12 @@ import {
   UpdateUserParams
 } from '@/lib/shared.types'
 import { revalidatePath } from 'next/cache'
-import Question from '@/lib/models/question.model'
-import Answer from '@/lib/models/answer.model'
+import Question from '@/database/question.model'
+import Answer from '@/database/answer.model'
 
 export async function getUserById(params: GetUserByIdParams) {
   try {
-    await connectToDatabase()
+    await dbConnect()
 
     const { userId } = params
 
@@ -34,7 +34,7 @@ export async function getUserById(params: GetUserByIdParams) {
 
 export async function createUser(userData: CreateUserParams) {
   try {
-    await connectToDatabase()
+    await dbConnect()
 
     const newUser = await User.create(userData)
 
@@ -47,7 +47,7 @@ export async function createUser(userData: CreateUserParams) {
 
 export async function updateUser(params: UpdateUserParams) {
   try {
-    await connectToDatabase()
+    await dbConnect()
 
     const { clerkId, updateData, path } = params
 
@@ -64,7 +64,7 @@ export async function updateUser(params: UpdateUserParams) {
 
 export async function deleteUser(params: DeleteUserParams) {
   try {
-    await connectToDatabase()
+    await dbConnect()
 
     const { clerkId } = params
 
@@ -90,7 +90,7 @@ export async function deleteUser(params: DeleteUserParams) {
 
 export async function getAllUsers(params: GetAllUsersParams) {
   try {
-    await connectToDatabase()
+    await dbConnect()
 
     // const {page = 1, pageSize = 20, filter, searchQuery} = params
 
@@ -107,7 +107,7 @@ export async function getAllUsers(params: GetAllUsersParams) {
 
 export async function getUserInfo(params: GetUserByIdParams) {
   try {
-    await connectToDatabase()
+    await dbConnect()
 
     const user = await getUserById({ userId: params.userId })
 

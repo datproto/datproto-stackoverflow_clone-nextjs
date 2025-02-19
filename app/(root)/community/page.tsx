@@ -1,10 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
-import {Button} from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar'
-import {UserFilters} from '@/constants/filter'
+import { UserFilters } from '@/constants/filter'
 import FilterDropdown from '@/components/shared/filter/FilterDropdown'
-import {getAllUsers} from '@/lib/actions/user.action'
+import { getAllUsers } from '@/lib/actions/user.action'
 import UserCard from '@/components/cards/UserCard'
 import NoResult from '@/components/shared/NoResult'
 
@@ -28,7 +28,7 @@ const Page = async () => {
           route="/community"
           placeholder="Search for amazing minds"
           iconPosition="left"
-          imgSrc="/assets/icons/search.svg"
+          imgSrc="/icons/search.svg"
           customClass="flex-1"
         />
 
@@ -42,11 +42,11 @@ const Page = async () => {
       <section className="mt-12 flex flex-wrap gap-4">
         {result.users.length > 0 ? (
           result.users.map(u => (
-            <UserCard key={u._id} user={u}/>
+            <UserCard key={u._id} user={u} />
           ))
         ) : (
           <NoResult title="No Users Found" description="It looks like there are no users found." link="/sign-up"
-                    linkTitle="Join to be the first!"/>
+            linkTitle="Join to be the first!" />
         )}
       </section>
 

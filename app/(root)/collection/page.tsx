@@ -25,7 +25,7 @@ export default async function Home() {
           route="/"
           placeholder="Search for questions..."
           iconPosition="left"
-          imgSrc="/assets/icons/search.svg"
+          imgSrc="/icons/search.svg"
         />
 
         <FilterDropdown

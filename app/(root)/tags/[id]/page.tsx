@@ -1,13 +1,13 @@
 import React from 'react'
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar'
 import FilterDropdown from '@/components/shared/filter/FilterDropdown'
-import {QuestionFilters} from '@/constants/filter'
+import { QuestionFilters } from '@/constants/filter'
 import QuestionCard from '@/components/cards/QuestionCard'
 import NoResult from '@/components/shared/NoResult'
-import {getQuestionsByTagId} from '@/lib/actions/tag.action'
-import {URLProps} from '@/types'
+import { getQuestionsByTagId } from '@/lib/actions/tag.action'
+import { URLProps } from '@/types'
 
-const Page = async ({params, searchParams}: URLProps) => {
+const Page = async ({ params, searchParams }: URLProps) => {
   const result = await getQuestionsByTagId({
     tagId: params.id,
     page: 1,
@@ -22,7 +22,7 @@ const Page = async ({params, searchParams}: URLProps) => {
           route="/"
           placeholder="Search for questions..."
           iconPosition="left"
-          imgSrc="/assets/icons/search.svg"
+          imgSrc="/icons/search.svg"
         />
 
         <FilterDropdown
@@ -33,7 +33,7 @@ const Page = async ({params, searchParams}: URLProps) => {
 
       <div className="mt-10 flex w-full flex-col gap-6">
         {/* Looping through questions */}
-         {result.questions.length > 0 ? result.questions.map((q: any) => (
+        {result.questions.length > 0 ? result.questions.map((q: any) => (
           <QuestionCard
             key={q._id}
             _id={q._id}
@@ -45,7 +45,7 @@ const Page = async ({params, searchParams}: URLProps) => {
             answers={q.answers}
             createdAt={q.createdAt}
           />
-         )
+        )
         ) : (
           <NoResult
             title="There's no tag question to show"

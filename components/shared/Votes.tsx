@@ -1,11 +1,11 @@
 'use client'
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import Image from 'next/image'
-import {formatBigNumber} from '@/lib/utils'
-import {downVoteAnswer, downvoteQuestion, upVoteAnswer, upvoteQuestion} from '@/lib/actions/vote.action'
-import {usePathname, useRouter} from 'next/navigation'
-import {toggleSaveQuestion} from '@/lib/actions/question.action'
-import {viewQuestion} from '@/lib/actions/interaction.action'
+import { formatBigNumber } from '@/lib/utils'
+import { downVoteAnswer, downvoteQuestion, upVoteAnswer, upvoteQuestion } from '@/lib/actions/vote.action'
+import { usePathname, useRouter } from 'next/navigation'
+import { toggleSaveQuestion } from '@/lib/actions/question.action'
+import { viewQuestion } from '@/lib/actions/interaction.action'
 
 interface VoteProps {
   type: 'question' | 'answer';
@@ -19,15 +19,15 @@ interface VoteProps {
 }
 
 const Votes: React.FC<VoteProps> = ({
-                                      type,
-                                      itemId,
-                                      userId,
-                                      upVotes,
-                                      downVotes,
-                                      hasUpVoted,
-                                      hasDownVoted,
-                                      hasSaved
-                                    }) => {
+  type,
+  itemId,
+  userId,
+  upVotes,
+  downVotes,
+  hasUpVoted,
+  hasDownVoted,
+  hasSaved
+}) => {
   const path = usePathname()
   const router = useRouter()
 
@@ -99,9 +99,9 @@ const Votes: React.FC<VoteProps> = ({
     <div className="flex gap-4">
       <div className="flex-center gap-2.5">
         <div className="flex-center gap-1.5">
-          <Image src={hasUpVoted ? '/assets/icons/upvoted.svg' : '/assets/icons/upvote.svg'} alt="upvote" width={18}
-                 height={18} className="cursor-pointer"
-                 onClick={() => handleVote('upVote')}
+          <Image src={hasUpVoted ? '/icons/upvoted.svg' : '/icons/upvote.svg'} alt="upvote" width={18}
+            height={18} className="cursor-pointer"
+            onClick={() => handleVote('upVote')}
           />
 
           <div className="flex-center background-light700_dark400 min-w-[18px] rounded-xs p-1">
@@ -110,10 +110,10 @@ const Votes: React.FC<VoteProps> = ({
         </div>
 
         <div className="flex-center gap-1.5">
-          <Image src={hasDownVoted ? '/assets/icons/downvoted.svg' : '/assets/icons/downvote.svg'} alt="downvote"
-                 width={18}
-                 height={18} className="cursor-pointer"
-                 onClick={() => handleVote('downVote')}
+          <Image src={hasDownVoted ? '/icons/downvoted.svg' : '/icons/downvote.svg'} alt="downvote"
+            width={18}
+            height={18} className="cursor-pointer"
+            onClick={() => handleVote('downVote')}
           />
 
           <div className="flex-center background-light700_dark400 min-w-[18px] rounded-xs p-1">
@@ -123,10 +123,10 @@ const Votes: React.FC<VoteProps> = ({
       </div>
 
       {type === 'question' && (
-        <Image src={hasSaved ? '/assets/icons/star-filled.svg' : '/assets/icons/star-red.svg'} alt="save"
-               width={18}
-               height={18} className="cursor-pointer"
-               onClick={() => handleSave()}
+        <Image src={hasSaved ? '/icons/star-filled.svg' : '/icons/star-red.svg'} alt="save"
+          width={18}
+          height={18} className="cursor-pointer"
+          onClick={() => handleSave()}
         />
       )}
     </div>

@@ -1,112 +1,79 @@
-import React from 'react'
-import Link from 'next/link'
-import Tag from '@/components/shared/Tag'
-import Metric from '@/components/shared/Metric'
-import {formatBigNumber, getTimeStamp} from '@/lib/utils'
-import Image from 'next/image'
-import {Button} from '@/components/ui/button'
+import Link from "next/link";
+import React from "react";
 
-interface IQuestionCard {
-  _id: string
-  clerkId?: string | null
-  title: string
-  tags: {
-    _id: string
-    name: string
-  }[]
-  author: {
-    _id: string,
-    clerkId: string
-    name: string
-    picture: string
-  }
-  upVotes: Array<Object>
-  views: number
-  answers: Array<Object>
-  createdAt: Date
+import ROUTES from "@/constants/routes";
+import { getTimeStamp } from "@/lib/utils";
+
+import TagCard from "./TagCard";
+import Metric from "@/components/Metric";
+import { Question, Tag } from "@/types";
+
+interface Props {
+  question: Question;
 }
 
 const QuestionCard = ({
-                        _id,
-                        clerkId,
-                        title,
-                        tags,
-                        author,
-                        upVotes,
-                        views,
-                        answers,
-                        createdAt
-                      }: IQuestionCard) => {
-  // const handleDeletePost = () => {
-  //   console.log('Gonna delete this post: ' + _id)
-  // }
-
+  question: { _id, title, tags, author, createdAt, upvotes, answers, views },
+}: Props) => {
   return (
-    <div className="card-wrapper shadow-light100_dark100 light-border rounded-[10px] border p-9 sm:px-11">
+    <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
         <div>
-          <span
-            className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">{getTimeStamp(createdAt)}</span>
-          <Link href={`/question/${_id}`}>
+          <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
+            {getTimeStamp(createdAt)}
+          </span>
+
+          <Link href={ROUTES.QUESTION(_id)}>
             <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1">
               {title}
             </h3>
           </Link>
         </div>
-
-        {clerkId && clerkId === author.clerkId && (
-          <div className='flex shrink-0 items-center gap-3'>
-            <Link href={`/questions/${_id}/edit`}>
-              <Image src='/assets/icons/edit.svg' alt='Edit Icon' width={14} height={14} />
-            </Link>
-            <Button type='button' className='h-0 p-0'>
-              <Image src='/assets/icons/trash.svg' alt='Edit Icon' width={14} height={14} />
-            </Button>
-          </div>
-        )}
       </div>
 
-      {/* If signed in add edit / delete actions */}
-      <div className="mt-3.5 flex flex-wrap gap-2">
-        {tags.map(tag => (
-          <Tag text={tag.name} key={tag._id} _id={tag._id}/>
+      <div className="mt-3.5 flex w-full flex-wrap gap-2">
+        {tags.map((tag: Tag) => (
+          <TagCard key={tag._id} _id={tag._id} name={tag.name} compact />
         ))}
       </div>
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <Metric
-          imgUrl={author.picture}
-          alt="User"
+          imgUrl={author.image}
+          alt={author.name}
           value={author.name}
-          title={`- ${getTimeStamp(createdAt)}`}
-          href={`/profile/${author._id}`}
+          title={`• asked ${getTimeStamp(createdAt)}`}
+          href={ROUTES.PROFILE(author._id)}
+          textStyles="body-medium text-dark400_light700"
           isAuthor
-          textStyles="small-medium text-dark400_light800"
         />
-        <Metric
-          imgUrl="/assets/icons/like.svg"
-          alt="Upvotes"
-          value={formatBigNumber(upVotes.length)}
-          title=" Votes"
-          textStyles="small-medium text-dark400_light800"
-        />
-        <Metric
-          imgUrl="/assets/icons/message.svg"
-          alt="Message"
-          value={formatBigNumber(answers.length)}
-          title=" Answers"
-          textStyles="small-medium text-dark400_light800"
-        />
-        <Metric
-          imgUrl="/assets/icons/eye.svg"
-          alt="Eye"
-          value={formatBigNumber(views)}
-          title=" Views"
-          textStyles="small-medium text-dark400_light800"
-        />
+
+        <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
+          <Metric
+            imgUrl="/icons/like.svg"
+            alt="like"
+            value={upvotes}
+            title=" Votes"
+            textStyles="small-medium text-dark400_light800"
+          />
+          <Metric
+            imgUrl="/icons/message.svg"
+            alt="answers"
+            value={answers}
+            title=" Answers"
+            textStyles="small-medium text-dark400_light800"
+          />
+          <Metric
+            imgUrl="/icons/eye.svg"
+            alt="views"
+            value={views}
+            title=" Views"
+            textStyles="small-medium text-dark400_light800"
+          />
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default QuestionCard
+export default QuestionCard;

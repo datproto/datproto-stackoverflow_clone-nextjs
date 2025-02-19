@@ -1,10 +1,9 @@
-import {ClerkProvider} from '@clerk/nextjs'
-import type {Metadata} from 'next'
+import { ClerkProvider } from '@clerk/nextjs'
+import type { Metadata } from 'next'
 import React from 'react'
 import './globals.css'
-import '@/styles/prism.css'
 // eslint-disable-next-line camelcase
-import {Inter, Space_Grotesk} from 'next/font/google'
+import { Inter, Space_Grotesk } from 'next/font/google'
 import ThemeProvider from '@/context/ThemeProvider'
 
 export const metadata: Metadata = {
@@ -28,26 +27,26 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export default function RootLayout({
-                                     children
-                                   }: {
+  children
+}: {
   children: React.ReactNode
 }) {
   return (
     <html lang="en">
-    <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
-    <ClerkProvider
-      appearance={{
-        elements: {
-          formButtonPrimary: 'primary-gradient',
-          footerActionLink: 'primary-text-gradient hover:text-blue-500'
-        }
-      }}
-    >
-      <ThemeProvider>
-        {children}
-      </ThemeProvider>
-    </ClerkProvider>
-    </body>
+      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
+        <ClerkProvider
+          appearance={{
+            elements: {
+              formButtonPrimary: 'primary-gradient',
+              footerActionLink: 'primary-text-gradient hover:text-blue-500'
+            }
+          }}
+        >
+          <ThemeProvider>
+            {children}
+          </ThemeProvider>
+        </ClerkProvider>
+      </body>
     </html>
   )
 }

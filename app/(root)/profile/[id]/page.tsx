@@ -36,19 +36,19 @@ const Page = async ({ params, searchParams }: URLProps) => {
             <div className="mt-5 flex flex-wrap justify-start gap-5">
               {userInfo.user.portfolioWebsite && (
                 <ProfileLink
-                  imgUrl='/assets/icons/link.svg'
+                  imgUrl='/icons/link.svg'
                   href={userInfo.user.portfolioWebsite}
                   title='Portfolio'
                 />
               )}
               {userInfo.user.location && (
                 <ProfileLink
-                  imgUrl='/assets/icons/location.svg'
+                  imgUrl='/icons/location.svg'
                   title={userInfo.user.location}
                 />
               )}
               <ProfileLink
-                imgUrl='/assets/icons/calendar.svg'
+                imgUrl='/icons/calendar.svg'
                 title={getJoinedDate(userInfo.user.createdAt)}
               />
 

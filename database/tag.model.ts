@@ -1,26 +1,20 @@
-import { Document, model, models, Schema } from 'mongoose';
 
-interface ITag extends Document {
+import { Schema, models, model, Document } from "mongoose";
+
+export interface ITag {
   name: string;
-  description?: string;
-  createdAt: Date;
-  updatedAt: Date;
-  questions: Schema.Types.ObjectId[];
-  followers: Schema.Types.ObjectId[];
+  questions: number;
 }
 
-const TagSchema: Schema = new Schema(
+export interface ITagDoc extends ITag, Document { }
+const TagSchema = new Schema<ITag>(
   {
     name: { type: String, required: true, unique: true },
-    description: { type: String },
-    questions: [{ type: Schema.Types.ObjectId, ref: 'Question' }],
-    followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    questions: { type: Number, default: 0 },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-const Tag = models.Tag || model<ITag>('Tag', TagSchema);
+const Tag = models?.Tag || model<ITag>("Tag", TagSchema);
 
 export default Tag;

@@ -1,17 +1,17 @@
 'use client'
 
 import React from 'react'
-import {popularTags, questions, sidebarLinks} from '@/constants'
+import { popularTags, questions, sidebarLinks } from '@/constants'
 import Link from 'next/link'
 import Image from 'next/image'
-import {usePathname} from 'next/navigation'
-import {SignedIn, SignedOut, useAuth} from '@clerk/nextjs'
-import {Button} from '@/components/ui/button'
+import { usePathname } from 'next/navigation'
+import { useAuth } from '@clerk/nextjs'
+import { Button } from '@/components/ui/button'
 import Tag from '@/components/shared/Tag'
 
 const LeftSidebar = () => {
   const pathname = usePathname()
-  const {userId} = useAuth()
+  const { userId } = useAuth()
 
   return (
     <section
@@ -30,7 +30,7 @@ const LeftSidebar = () => {
 
           return (
             <Link href={item.route} key={item.label}
-                  className={`${isActive ? 'primary-gradient rounded-lg text-light-900' : 'text-dark300_light900'} flex items-center justify-start gap-4 bg-transparent p-4`}>
+              className={`${isActive ? 'primary-gradient rounded-lg text-light-900' : 'text-dark300_light900'} flex items-center justify-start gap-4 bg-transparent p-4`}>
               <Image
                 src={item.imgURL}
                 alt={item.label}
@@ -44,55 +44,35 @@ const LeftSidebar = () => {
         })}
       </div>
 
-      <SignedOut>
-        <div className="flex flex-col gap-3">
-          <Link href="/sign-in" className="flex items-center">
-            <Button
-              className="small-medium text-dark400_light900 flex min-h-[41px] w-full justify-start gap-4 rounded-lg px-4 py-3 shadow-none">
-              <Image
-                src="/assets/icons/account.svg"
-                alt="sign-in"
-                width={20}
-                height={20}
-                className="invert-colors"
-              />
-              <p className="base-medium max-lg:hidden">Log in</p>
-            </Button>
-          </Link>
+      <div className="flex flex-col gap-3 mt-auto">
+        <Link href="/sign-in" className="flex items-center">
+          <Button
+            className="small-medium text-dark400_light900 flex min-h-[41px] w-full justify-start gap-4 rounded-lg px-4 py-3 shadow-none">
+            <Image
+              src="/icons/account.svg"
+              alt="sign-in"
+              width={20}
+              height={20}
+              className="invert-colors"
+            />
+            <p className="base-medium max-lg:hidden">Log in</p>
+          </Button>
+        </Link>
 
-          <Link href="/sign-up" className="flex items-center">
-            <Button
-              className="small-medium light-border-2 text-dark400_light900 flex min-h-[41px] w-full justify-start gap-4 rounded-lg px-4 py-3 shadow-none">
-              <Image
-                src="/assets/icons/sign-up.svg"
-                alt="sign-up"
-                width={20}
-                height={20}
-                className="invert-colors"
-              />
-              <p className="base-medium max-lg:hidden">Sign Up</p>
-            </Button>
-          </Link>
-        </div>
-      </SignedOut>
-
-      <SignedIn>
-        <div className="flex flex-col gap-3">
-          <Link href="/sign-out">
-            <Button
-              className="small-medium text-dark400_light900 flex min-h-[41px] w-full justify-start gap-4 rounded-lg px-4 py-3 shadow-none">
-              <Image
-                src="/assets/icons/sign-out.svg"
-                alt="sign-in"
-                width={20}
-                height={20}
-                className="invert-colors"
-              />
-              <p className="base-medium max-lg:hidden">Logout</p>
-            </Button>
-          </Link>
-        </div>
-      </SignedIn>
+        <Link href="/sign-up" className="flex items-center">
+          <Button
+            className="small-medium light-border-2 text-dark400_light900 flex min-h-[41px] w-full justify-start gap-4 rounded-lg px-4 py-3 shadow-none">
+            <Image
+              src="/icons/sign-up.svg"
+              alt="sign-up"
+              width={20}
+              height={20}
+              className="invert-colors"
+            />
+            <p className="base-medium max-lg:hidden">Sign Up</p>
+          </Button>
+        </Link>
+      </div>
     </section>
   )
 }
@@ -107,11 +87,11 @@ const RightSideBar = () => {
         <div id="right-sidebard_hot-list" className="flex flex-col gap-4">
           {questions.length > 0 ? questions.map(ques => ques.views >= 100 && (
             <Link href="/" key={`top-${ques._id}`} id={`right-sidebar_tags-list-${ques._id}`}
-                  className="flex-between text-dark500_light700 flex items-start gap-3">
+              className="flex-between text-dark500_light700 flex items-start gap-3">
               <div className="body-medium">{ques.title}</div>
 
-              <Image src="/assets/icons/chevron-right.svg" width={20} height={20} alt="right-icon"
-                     className="invert-colors self-start"/>
+              <Image src="/icons/chevron-right.svg" width={20} height={20} alt="right-icon"
+                className="invert-colors self-start" />
             </Link>
           )) : (<></>)}
         </div>
@@ -121,7 +101,7 @@ const RightSideBar = () => {
         <h3 className="h3-bold text-dark200_light900 capitalize">popular tags</h3>
         <div id="right-sidebar_tags-list" className="flex flex-col gap-4">
           {popularTags.map(tag => (
-            <Tag key={tag._id} _id={tag._id} text={tag.name} showCount totalQuestions={tag.totalQuestions}/>
+            <Tag key={tag._id} _id={tag._id} text={tag.name} showCount totalQuestions={tag.totalQuestions} />
           ))}
         </div>
       </div>
@@ -129,4 +109,4 @@ const RightSideBar = () => {
   )
 }
 
-export {LeftSidebar, RightSideBar}
+export { LeftSidebar, RightSideBar }

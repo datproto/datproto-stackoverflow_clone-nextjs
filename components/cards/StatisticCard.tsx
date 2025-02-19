@@ -14,12 +14,12 @@ interface IStatisticCard {
   }
 }
 
-const StatisticCard = ({stats, icon}: IStatisticCard) => {
+const StatisticCard = ({ stats, icon }: IStatisticCard) => {
   return (
     <div className='light-border background-light900_dark300 flex items-center justify-center gap-3.5 rounded-md border px-6 py-5'>
       {icon && (
         <Image
-          src={`/assets/icons/${icon.name}.svg`}
+          src={`/icons/${icon.name}.svg`}
           alt={icon.alt || 'icon'}
           className='object-cover'
           width={icon.width}

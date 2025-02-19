@@ -1,19 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  ignoreBuildErrors: true,
+  serverExternalPackages: ["pino", "pino-pretty"],
   images: {
-    domains: ["i.pravatar.cc"],
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "*"
+        hostname: "*",
       },
       {
         protocol: "http",
-        hostname: "*"
-      }
-    ]
-  }
+        hostname: "*",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Metric from '@/components/shared/Metric'
-import {formatBigNumber, getTimeStamp} from '@/lib/utils'
+import { formatBigNumber, getTimeStamp } from '@/lib/utils'
 
 interface IQuestionCard {
   _id: string
@@ -20,13 +20,13 @@ interface IQuestionCard {
 }
 
 const AnswerCard = ({
-                        _id,
-                        clerkId,
-                        author,
-                        question,
-                        upVotes,
-                        createdAt
-                      }: IQuestionCard) => {
+  _id,
+  clerkId,
+  author,
+  question,
+  upVotes,
+  createdAt
+}: IQuestionCard) => {
 
   return (
     <div className="card-wrapper shadow-light100_dark100 light-border rounded-[10px] border p-9 sm:px-11">
@@ -53,7 +53,7 @@ const AnswerCard = ({
           textStyles="small-medium text-dark400_light800"
         />
         <Metric
-          imgUrl="/assets/icons/like.svg"
+          imgUrl="/icons/like.svg"
           alt="Upvotes"
           value={formatBigNumber(upVotes.length)}
           title=" Votes"

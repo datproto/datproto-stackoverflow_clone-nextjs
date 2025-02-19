@@ -1,17 +1,17 @@
 'use server'
 
-import {GetAllTagsParams, GetQuestionsByTagIdParams, GetTopInteractedTagsParams} from '@/lib/shared.types'
-import {connectToDatabase} from '@/lib/mongoose'
-import User from '@/lib/models/user.model'
-import Tag, {ITag} from '@/lib/models/tag.model'
-import {FilterQuery} from 'mongoose'
-import Question from '@/lib/models/question.model'
+import { GetAllTagsParams, GetQuestionsByTagIdParams, GetTopInteractedTagsParams } from '@/lib/shared.types'
+import dbConnect from '@/lib/mongoose'
+import User from '@/database/user.model'
+import Tag, { ITag } from '@/database/tag.model'
+import { FilterQuery } from 'mongoose'
+import Question from '@/database/question.model'
 
 export async function getTopInInteractedTagsParams(params: GetTopInteractedTagsParams) {
   try {
-    await connectToDatabase()
+    await dbConnect()
 
-    const {userId} = params
+    const { userId } = params
 
     const user = await User.findById(userId)
 
@@ -20,8 +20,8 @@ export async function getTopInInteractedTagsParams(params: GetTopInteractedTagsP
     // Find interaction for the user and group by tags
 
     return [
-      {_id: '1', name: 'tag1'},
-      {_id: '2', name: 'tag2'}
+      { _id: '1', name: 'tag1' },
+      { _id: '2', name: 'tag2' }
     ]
   } catch (e) {
     console.log(e)
@@ -31,12 +31,12 @@ export async function getTopInInteractedTagsParams(params: GetTopInteractedTagsP
 
 export async function getAllTags(params: GetAllTagsParams) {
   try {
-    await connectToDatabase()
+    await dbConnect()
 
     const tags = await Tag.find({})
-      .sort({createdAt: -1})
+      .sort({ createdAt: -1 })
 
-    return {tags}
+    return { tags }
   } catch (e) {
     console.log(e)
     throw e
@@ -45,20 +45,20 @@ export async function getAllTags(params: GetAllTagsParams) {
 
 export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
   try {
-    connectToDatabase()
+    dbConnect()
 
-    const {tagId , searchQuery} = params
+    const { tagId, searchQuery } = params
 
-    const tagFilter: FilterQuery<ITag> = {_id: tagId}
+    const tagFilter: FilterQuery<ITag> = { _id: tagId }
     const tag = await Tag.findOne(tagFilter).populate(
       {
         path: 'questions',
         model: Question,
         match: searchQuery
-          ? {title: {$regex: searchQuery, $options: 1}}
+          ? { title: { $regex: searchQuery, $options: 1 } }
           : {},
         options: {
-          sort: {createdAt: -1}
+          sort: { createdAt: -1 }
         },
         populate: [
           {
@@ -81,7 +81,7 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
 
     const questions = tag.questions
 
-    return {tagTitle: tag.name, questions}
+    return { tagTitle: tag.name, questions }
   } catch (e) {
     console.log(e)
     throw e

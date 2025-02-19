@@ -1,18 +1,18 @@
 'use client'
 
-import React, {useRef, useState} from 'react'
-import {Form, FormControl, FormField, FormItem, FormMessage} from '@/components/ui/form'
-import {useForm} from 'react-hook-form'
-import {z} from 'zod'
+import React, { useRef, useState } from 'react'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
-import {answerSchema} from '@/lib/validations'
-import {zodResolver} from '@hookform/resolvers/zod'
-import {Editor} from '@tinymce/tinymce-react'
-import {useTheme} from '@/context/ThemeProvider'
-import {Button} from '@/components/ui/button'
+import { answerSchema } from '@/lib/validations'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Editor } from '@tinymce/tinymce-react'
+import { useTheme } from '@/context/ThemeProvider'
+import { Button } from '@/components/ui/button'
 import Image from 'next/image'
-import {createAnswer} from '@/lib/actions/answer.action'
-import {usePathname} from 'next/navigation'
+import { createAnswer } from '@/lib/actions/answer.action'
+import { usePathname } from 'next/navigation'
 
 interface IAnswer {
   question: string
@@ -20,10 +20,10 @@ interface IAnswer {
   authorId: string
 }
 
-const Answer = ({question, questionId, authorId}: IAnswer) => {
+const Answer = ({ question, questionId, authorId }: IAnswer) => {
   const pathname = usePathname()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const {mode} = useTheme()
+  const { mode } = useTheme()
 
   const editorRef = useRef(null)
 
@@ -69,7 +69,7 @@ const Answer = ({question, questionId, authorId}: IAnswer) => {
           onClick={() => {
           }}
         >
-          <Image src="/assets/icons/stars.svg" alt="Stars Icon" width={12} height={12} className="object-contain"/>
+          <Image src="/icons/stars.svg" alt="Stars Icon" width={12} height={12} className="object-contain" />
           Generate an AI answer
         </Button>
       </div>
@@ -82,7 +82,7 @@ const Answer = ({question, questionId, authorId}: IAnswer) => {
           <FormField
             control={form.control}
             name="answer"
-            render={({field}) => (
+            render={({ field }) => (
               <FormItem className="flex w-full flex-col gap-3">
                 <FormControl className="mt-3.5">
                   <Editor

@@ -56,7 +56,7 @@ export async function createQuestion(params: CreateQuestionParams) {
 
 export async function getQuestions(params: GetQuestionsParams) {
   try {
-    await connectToDatabase()
+    await dbConnect()
 
     const questions = await Question.find({})
       .populate({ path: 'tags', model: Tag })
@@ -71,7 +71,7 @@ export async function getQuestions(params: GetQuestionsParams) {
 
 export async function getQuestionById(params: GetQuestionByIdParams) {
   try {
-    await connectToDatabase()
+    await dbConnect()
 
     const { questionId } = params
 
@@ -121,7 +121,7 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
 
 export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   try {
-    await connectToDatabase()
+    await dbConnect()
 
     const { clerkId, searchQuery } = params
 
@@ -167,7 +167,7 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
 
 export async function getQuestionsByUser(params: GetUserStatsParams) {
   try {
-    await connectToDatabase()
+    await dbConnect()
 
     const { userId } = params
 
