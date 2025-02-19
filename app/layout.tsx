@@ -30,10 +30,10 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export default async function RootLayout({
-  children
-}: {
+  children,
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   const session = await auth()
 
   return (

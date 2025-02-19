@@ -1,15 +1,17 @@
 import React from 'react'
 import Question from '@/components/forms/Question'
 import { redirect } from 'next/navigation'
-import { getUserById } from '@/lib/actions/user.action'
+import { getUserByEmail, getUserById } from '@/lib/actions/user.action'
 import { auth } from '@/auth'
 
 const Page = async () => {
-  const { userId } = await auth()
+  const session = await auth()
 
-  if (!userId) redirect('/sign-in')
+  if (!session) redirect('/sign-in')
 
-  const mongoUser = await getUserById({ userId })
+  const mongoUser = await getUserByEmail(
+    session?.user?.email || ''
+  )
 
   return (
     <div>

@@ -1,0 +1,10 @@
+{
+  "SIGN_IN": {
+    "title": "Sign In",
+    "button": "Sign In"
+  },
+  "SIGN_UP": {
+    "title": "Sign Up",
+    "button": "Sign Up"
+  }
+}

@@ -1,6 +1,6 @@
-import {Schema} from 'mongoose'
+import { Schema } from 'mongoose'
 
-import {IUser} from '@/mongodb'
+import { IUser } from '@/mongodb'
 
 export interface CreateAnswerParams {
   content: string;
@@ -118,7 +118,7 @@ export interface CreateUserParams {
 }
 
 export interface GetUserByIdParams {
-  userId: string;
+  _id: string;
 }
 
 export interface GetAllUsersParams {
@@ -141,7 +141,7 @@ export interface ToggleSaveQuestionParams {
 }
 
 export interface GetSavedQuestionsParams {
-  clerkId: string;
+  _id: string;
   page?: number;
   pageSize?: number;
   filter?: string;

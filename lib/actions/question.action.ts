@@ -76,8 +76,8 @@ export async function getQuestionById(params: GetQuestionByIdParams) {
     const { questionId } = params
 
     const question = await Question.findById(questionId)
-      .populate({ path: 'tags', model: Tag, select: '_id name' })
-      .populate({ path: 'author', model: User, select: '_id clerkId name picture' })
+      .populate({ path: 'tags', model: Tag, select: 'id name' })
+      .populate({ path: 'author', model: User, select: 'id clerkId name picture' })
 
     return { question }
   } catch (e) {
@@ -123,13 +123,13 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   try {
     await dbConnect()
 
-    const { clerkId, searchQuery } = params
+    const { searchQuery, _id } = params
 
     const query: FilterQuery<typeof Question> = searchQuery
       ? { title: { $regex: new RegExp(searchQuery, 'i') } }
       : {}
     const user = await User.findOne({
-      clerkId
+      _id
     }).populate(
       {
         path: 'saved',
@@ -141,12 +141,12 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
           {
             path: 'tags',
             model: Tag,
-            select: '_id name'
+            select: 'id name'
           },
           {
             path: 'author',
             model: User,
-            select: '_id clerkId name picture'
+            select: 'id clerkId name picture'
           }
         ]
       }
@@ -178,7 +178,7 @@ export async function getQuestionsByUser(params: GetUserStatsParams) {
     )
       .sort({ views: -1, upVotes: -1 })
       .populate({ path: 'tags', model: Tag })
-      .populate('author', '_id clerkId name picture')
+      .populate('author', 'id clerkId name picture')
 
     return { totalQuestions, questions }
   } catch (e) {

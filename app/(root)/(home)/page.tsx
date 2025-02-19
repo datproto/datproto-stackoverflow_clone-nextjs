@@ -86,9 +86,21 @@ const Home = async ({ searchParams }: SearchParams) => {
       </section>
       <HomeFilter />
       <div className="mt-10 flex w-full flex-col gap-6">
-        {filteredQuestions.map((question) => (
-          <QuestionCard key={question._id} question={question} />
-        ))}
+        {filteredQuestions.map((question) => {
+          return (
+            <QuestionCard
+              key={question._id}
+              _id={question._id}
+              title={question.title}
+              tags={question.tags}
+              author={question.author}
+              createdAt={question.createdAt}
+              upVotes={question.upvotes}
+              answers={question.answers}
+              views={question.views}
+            />
+          )
+        })}
       </div>
     </>
   );

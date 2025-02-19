@@ -1,10 +1,10 @@
 import React from 'react'
-import {AnswerFilters} from '@/constants/filter'
+import { AnswerFilters } from '@/constants/filter'
 import FilterDropdown from '@/components/shared/filter/FilterDropdown'
-import {getAnswers} from '@/lib/actions/answer.action'
+import { getAnswers } from '@/lib/actions/answer.action'
 import Link from 'next/link'
 import Image from 'next/image'
-import {getTimeStamp} from '@/lib/utils'
+import { getTimeStamp } from '@/lib/utils'
 import ParseHTML from '@/components/shared/ParseHTML'
 import Votes from '@/components/shared/Votes'
 
@@ -16,8 +16,8 @@ interface IAllAnswers {
   filter?: number
 }
 
-const AllAnswers = async ({questionId, userId, totalAnswers, page, filter}: IAllAnswers) => {
-  const result = await getAnswers({questionId})
+const AllAnswers = async ({ questionId, userId, totalAnswers, page, filter }: IAllAnswers) => {
+  const result = await getAnswers({ questionId })
 
   return (
     <div className="mt-11">
@@ -37,7 +37,7 @@ const AllAnswers = async ({questionId, userId, totalAnswers, page, filter}: IAll
                 className="flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
                 <Link href={`/profile/${a.author.clerkId}`} className="flex flex-1 items-start gap-1 sm:items-center">
                   <Image src={a.author.picture} alt="profile" className="rounded-full object-cover max-sm:mt-0.5"
-                         width={18} height={18}/>
+                    width={18} height={18} />
                   <div className="flex flex-col sm:flex-row sm:items-center">
                     <p className="body-semibold text-dark300_light700">{a.author.name}</p>
                     <p className="small-regular text-light400_light500 ml-0.5 mt-0.5 line-clamp-1">
@@ -60,7 +60,7 @@ const AllAnswers = async ({questionId, userId, totalAnswers, page, filter}: IAll
               </div>
             </div>
 
-            <ParseHTML data={a.content}/>
+            <ParseHTML data={a.content} />
           </article>
         ))}
       </div>

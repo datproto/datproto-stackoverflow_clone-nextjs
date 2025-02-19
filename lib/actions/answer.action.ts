@@ -40,7 +40,7 @@ export async function getAnswers(params: GetAnswersParams) {
     const { questionId } = params
 
     const answers = await Answer.find({ question: questionId })
-      .populate('author', '_id clerkId name picture')
+      .populate('author', 'id clerkId name picture')
       .sort({ createdAt: -1 })
 
     return { answers }
@@ -62,8 +62,8 @@ export async function getAnswersByUser(params: GetUserStatsParams) {
       { author: userId }
     )
       .sort({ upVotes: -1 })
-      .populate('question', '_id title')
-      .populate('author', '_id clerkId name picture')
+      .populate('question', 'id title')
+      .populate('author', 'id clerkId name picture')
 
     return { totalAnswers, answers }
   } catch (e) {

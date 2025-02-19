@@ -17,9 +17,9 @@ export async function getUserById(params: GetUserByIdParams) {
   try {
     await dbConnect()
 
-    const { userId } = params
+    const { _id } = params
 
-    const user = await User.findOne({ clerkId: userId })
+    const user = await User.findOne({ _id })
 
     if (!user) {
       throw new Error('User not found')
@@ -31,6 +31,25 @@ export async function getUserById(params: GetUserByIdParams) {
     throw e
   }
 }
+
+export async function getUserByEmail(email: string) {
+  try {
+    await dbConnect()
+
+    const user = await User.findOne({ email })
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    return user
+  } catch (e) {
+    console.log(e)
+    throw e
+  }
+}
+
+
 
 export async function createUser(userData: CreateUserParams) {
   try {
@@ -75,7 +94,7 @@ export async function deleteUser(params: DeleteUserParams) {
     }
 
     // const userQuestionIds = await Question.find({author: user.value._id})
-    //   .distinct('_id')
+    //   .distinct('id')
 
     await Question.deleteMany({ author: user.value._id })
 
@@ -105,11 +124,11 @@ export async function getAllUsers(params: GetAllUsersParams) {
   }
 }
 
-export async function getUserInfo(params: GetUserByIdParams) {
+export async function getUserInfo({ _id }: GetUserByIdParams) {
   try {
     await dbConnect()
 
-    const user = await getUserById({ userId: params.userId })
+    const user = await getUserById({ _id })
 
     const totalQuestions = await Question.countDocuments({ authors: user._id })
     const totalAnswers = await Answer.countDocuments({ authors: user._id })

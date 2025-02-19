@@ -1,43 +1,13 @@
-'use client'
-
-import React from 'react'
-
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { sidebarLinks } from '@/constants'
-import { usePathname } from 'next/navigation'
+import NavContent from './NavContent'
+import { auth } from '@/auth'
 
-const NavContent = () => {
-  const pathname = usePathname()
+const MobileNav = async () => {
+  const session = await auth()
 
-  return (
-    <section className="flex h-full flex-col gap-3 md:gap-6 pt-16">
-      {sidebarLinks.map(item => {
-        const isActive = (pathname.includes(item.route) && item.route.length > 1) || pathname === item.route
-
-        return (
-          <SheetClose asChild key={item.route}>
-            <Link href={item.route}
-              className={`${isActive ? 'primary-gradient rounded-lg text-light-900' : 'text-dark300_light900'} flex items-center justify-start gap-4 bg-transparent p-4`}>
-              <Image
-                src={item.imgURL}
-                alt={item.label}
-                width={20}
-                height={20}
-                className={`${isActive ? '' : 'invert-colors'}`}
-              />
-              <p className={`${isActive ? 'base-bold' : 'base-medium'}`}>{item.label}</p>
-            </Link>
-          </SheetClose>
-        )
-      })}
-    </section>
-  )
-}
-
-const MobileNav = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -46,35 +16,48 @@ const MobileNav = () => {
       </SheetTrigger>
       <SheetContent side="left" className="background-light900_dark200 border-none">
         <Link href="/" className="flex items-center sm:px-12">
-          <Image src="/images/site-logo.svg" height={23} width={23} alt="DevFlow"
+          <Image src="/images/site-logo.svg" height={23} width={23} alt="StackOverflow"
             className="flex items-center gap-1" />
-          <p className="h2-bold text-dark100_light900 font-spaceGrotesk dark:text-light-500">Dev <span
+          <p className="h2-bold text-dark100_light900 font-spaceGrotesk dark:text-light-500">Stack <span
             className="text-primary-500">Overflow</span>
           </p>
         </Link>
 
         <div className="no-scrollbar flex h-[calc(100vh-80px)] flex-col justify-between overflow-y-auto">
           <SheetClose asChild>
-            <NavContent />
+            <NavContent
+              userId={session?.user?._id || ''}
+            />
           </SheetClose>
 
           <div className="flex flex-col gap-3">
-            <SheetClose asChild>
-              <Link href="/sign-in">
-                <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
-                  <span className="primary-text-gradient">Log In</span>
-                </Button>
-              </Link>
-            </SheetClose>
+            (!session) ? (
+            <>
+              <SheetClose asChild>
+                <Link href="/sign-in">
+                  <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
+                    <span className="primary-text-gradient">Log In</span>
+                  </Button>
+                </Link>
+              </SheetClose>
 
+              <SheetClose asChild>
+                <Link href="/sign-up">
+                  <Button
+                    className="small-medium light-border-2 text-dark400_light900 btn-tertiary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
+                    Sign Up
+                  </Button>
+                </Link>
+              </SheetClose>
+            </>
+            ) : (
             <SheetClose asChild>
-              <Link href="/sign-up">
-                <Button
-                  className="small-medium light-border-2 text-dark400_light900 btn-tertiary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
-                  Sign Up
-                </Button>
-              </Link>
+              <Button
+                className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
+                Sign Out
+              </Button>
             </SheetClose>
+            )
           </div>
         </div>
       </SheetContent>

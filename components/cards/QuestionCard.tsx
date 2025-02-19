@@ -8,13 +8,9 @@ import TagCard from "./TagCard";
 import Metric from "@/components/Metric";
 import { Question, Tag } from "@/types";
 
-interface Props {
-  question: Question;
-}
-
 const QuestionCard = ({
-  question: { _id, title, tags, author, createdAt, upvotes, answers, views },
-}: Props) => {
+  _id, title, tags, author, createdAt, upVotes, answers, views
+}: Question) => {
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
@@ -52,7 +48,7 @@ const QuestionCard = ({
           <Metric
             imgUrl="/icons/like.svg"
             alt="like"
-            value={upvotes}
+            value={upVotes}
             title=" Votes"
             textStyles="small-medium text-dark400_light800"
           />

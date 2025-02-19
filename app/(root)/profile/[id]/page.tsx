@@ -10,7 +10,7 @@ import QuestionTab from '@/components/shared/QuestionTab'
 import AnswerTab from '@/components/shared/AnswerTab'
 
 const Page = async ({ params, searchParams }: URLProps) => {
-  const userInfo = await getUserInfo({ userId: params.id })
+  const userInfo = await getUserInfo({ _id: params._id })
 
   return (
     <>

@@ -13,22 +13,23 @@ import AllAnswers from '@/components/shared/AllAnswers'
 import Votes from '@/components/shared/Votes'
 
 const Page = async ({
-  params,
-  searchParams
+  params
 }: {
-  params: { id: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
+  params: { _id: string };
+  searchParams?: {
+    [key: string]: string | string[] | undefined
+  };
 }) => {
-  const questionId = params.id
+  const questionId = params._id
   const result = await getQuestionById({ questionId })
 
-  const { userId: clerkId } = await auth()
+  const session = await auth()
 
   let mongoUser
 
-  if (clerkId) {
+  if (session) {
     mongoUser = await getUserById({
-      userId: clerkId
+      _id: session?.user?._id as string
     })
   }
 
@@ -95,7 +96,7 @@ const Page = async ({
         {question.tags.map((t: any) => (
           <Tag
             key={t._id}
-            _id={t._id}
+            _id{t._id}
             text={t.name}
             showCount={false}
           />

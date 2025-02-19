@@ -1,0 +1,10 @@
+{
+  "SIGN_IN": {
+    "title": "Đăng nhập",
+    "button": "Đăng nhập"
+  },
+  "SIGN_UP": {
+    "title": "Đăng ký",
+    "button": "Đăng ký"
+  }
+}

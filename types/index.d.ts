@@ -27,7 +27,7 @@ export interface Country {
 }
 
 export interface ParamsProps {
-  params: { id: string };
+  params: { _id: string };
 }
 
 export interface SearchParamsProps {
@@ -35,7 +35,7 @@ export interface SearchParamsProps {
 }
 
 export interface URLProps {
-  params: { id: string };
+  params: { _id: string };
   searchParams: { [key: string]: string | undefined };
 }
 
@@ -64,7 +64,7 @@ interface Question {
   tags: Tag[];
   author: Author;
   createdAt: Date;
-  upvotes: number;
+  upVotes: number;
   answers: number;
   views: number;
   createdAt: Date;
@@ -85,3 +85,10 @@ type ErrorResponse = ActionResponse<undefined> & { success: false };
 
 type APIErrorResponse = NextResponse<ErrorResponse>;
 type APIResponse<T = null> = NextResponse<SuccessResponse<T> | ErrorResponse>;
+
+interface AuthCredentials {
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+}

@@ -17,7 +17,7 @@ interface ITagCard {
 }
 
 const TagCard = ({
-  _id,
+  id,
   name,
   questions,
   showCount,
@@ -63,7 +63,7 @@ const TagCard = ({
         {Content}
       </button>
     ) : (
-      <Link href={ROUTES.TAGS(_id)} className="flex justify-between gap-2">
+      <Link href={ROUTES.TAGS(id)} className="flex justify-between gap-2">
         {Content}
       </Link>
     );

@@ -1,15 +1,15 @@
 import React from 'react'
-import {SearchParamsProps} from '@/types'
-import {getAnswersByUser} from '@/lib/actions/answer.action'
+import { SearchParamsProps } from '@/types'
+import { getAnswersByUser } from '@/lib/actions/answer.action'
 import AnswerCard from '@/components/cards/AnswerCard'
 
-interface IAnswerTab extends SearchParamsProps{
+interface IAnswerTab extends SearchParamsProps {
   userId: string
   clerkId?: string | null
   searchProps?: string
 }
 
-const AnswerTab = async ({searchProps, userId, clerkId}: IAnswerTab) => {
+const AnswerTab = async ({ searchProps, userId, clerkId }: IAnswerTab) => {
   const result = await getAnswersByUser({
     userId,
     page: 1

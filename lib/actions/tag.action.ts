@@ -64,12 +64,12 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
           {
             path: 'tags',
             model: Tag,
-            select: '_id name'
+            select: 'id name'
           },
           {
             path: 'author',
             model: User,
-            select: '_id clerkId name picture'
+            select: 'id clerkId name picture'
           }
         ]
       }

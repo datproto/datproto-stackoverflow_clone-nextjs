@@ -20,7 +20,7 @@ interface IQuestionCard {
 }
 
 const AnswerCard = ({
-  _id,
+  id,
   clerkId,
   author,
   question,

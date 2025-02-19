@@ -74,14 +74,14 @@ export const BADGE_CRITERIA = {
 
 export const questions = [
   {
-    _id: '1',
+    id: '1',
     title: 'How do I use express as a custom server in NextJS?',
     tags: [
-      { _id: '1', name: 'nextjs' },
-      { _id: '2', name: 'expressjs' }
+      { id: '1', name: 'nextjs' },
+      { id: '2', name: 'expressjs' }
     ],
     author: {
-      _id: '1',
+      id: '1',
       name: 'John Doe',
       picture: 'profile.jpg'
     },
@@ -91,14 +91,14 @@ export const questions = [
     createdAt: new Date('2023-08-23T12:00:00.00Z')
   },
   {
-    _id: '2',
+    id: '2',
     title: 'Cascading Deletes in SQLAlchemy?',
     tags: [
-      { _id: '3', name: 'python' },
-      { _id: '4', name: 'sql' }
+      { id: '3', name: 'python' },
+      { id: '4', name: 'sql' }
     ],
     author: {
-      _id: '2',
+      id: '2',
       name: 'Jane Smith',
       picture: 'profile.jpg'
     },
@@ -108,14 +108,14 @@ export const questions = [
     createdAt: new Date('2023-08-23T12:00:00.00Z')
   },
   {
-    _id: '3',
+    id: '3',
     title: 'How to Perfectly Center a Div with Tailwind CSS?',
     tags: [
-      { _id: '5', name: 'css' },
-      { _id: '6', name: 'tailwind' }
+      { id: '5', name: 'css' },
+      { id: '6', name: 'tailwind' }
     ],
     author: {
-      _id: '3',
+      id: '3',
       name: 'Alice Johnson',
       picture: 'profile.jpg'
     },
@@ -125,14 +125,14 @@ export const questions = [
     createdAt: new Date('2023-08-23T12:00:00.00Z')
   },
   {
-    _id: '4',
+    id: '4',
     title: 'Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?',
     tags: [
-      { _id: '1', name: 'nextjs' },
-      { _id: '7', name: 'ssr' }
+      { id: '1', name: 'nextjs' },
+      { id: '7', name: 'ssr' }
     ],
     author: {
-      _id: '4',
+      id: '4',
       name: 'Bob Wilson',
       picture: 'profile.jpg'
     },
@@ -142,13 +142,13 @@ export const questions = [
     createdAt: new Date('2023-08-23T12:00:00.00Z')
   },
   {
-    _id: '5',
+    id: '5',
     title: 'Redux Toolkit Not Updating State as Expected',
     tags: [
-      { _id: '8', name: 'redux' }
+      { id: '8', name: 'redux' }
     ],
     author: {
-      _id: '5',
+      id: '5',
       name: 'Eve Brown',
       picture: 'profile.jpg'
     },
@@ -160,16 +160,37 @@ export const questions = [
 ]
 
 export const popularTags = [
-  { _id: '1', name: 'javascript', totalQuestions: 5 },
-  { _id: '2', name: 'react', totalQuestions: 5 },
-  { _id: '3', name: 'next', totalQuestions: 5 },
-  { _id: '4', name: 'vue', totalQuestions: 2 },
-  { _id: '5', name: 'redux', totalQuestions: 10 }
+  { id: '1', name: 'javascript', totalQuestions: 5 },
+  { id: '2', name: 'react', totalQuestions: 5 },
+  { id: '3', name: 'next', totalQuestions: 5 },
+  { id: '4', name: 'vue', totalQuestions: 2 },
+  { id: '5', name: 'redux', totalQuestions: 10 }
 ]
 
 export const filters = [
-  { _id: 1, name: 'newest', filter: 'newest' },
-  { _id: 2, name: 'recommended questions', filter: 'recommended' },
-  { _id: 3, name: 'frequent', filter: 'freq' },
-  { _id: 4, name: 'unanswered', filter: 'unanswered' }
+  { id: 1, name: 'newest', filter: 'newest' },
+  { id: 2, name: 'recommended questions', filter: 'recommended' },
+  { id: 3, name: 'frequent', filter: 'freq' },
+  { id: 4, name: 'unanswered', filter: 'unanswered' }
 ]
+
+export const AUTH_FIELD_TYPES = {
+  username: "text",
+  name: "text",
+  email: "email",
+  password: "password",
+};
+
+export const AUTH_FIELD_NAMES = {
+  username: "Username",
+  name: "Name",
+  email: "Email",
+  password: "Password",
+};
+
+export const AUTH_FIELD_PLACEHOLDER = {
+  username: "Your favorite username",
+  name: "Your full name",
+  email: "Your email address",
+  password: "Your password",
+}

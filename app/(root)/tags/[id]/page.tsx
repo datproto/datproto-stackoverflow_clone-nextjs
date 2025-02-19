@@ -9,7 +9,7 @@ import { URLProps } from '@/types'
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const result = await getQuestionsByTagId({
-    tagId: params.id,
+    tagId: params._id,
     page: 1,
     searchQuery: searchParams.q
   })
@@ -36,7 +36,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
         {result.questions.length > 0 ? result.questions.map((q: any) => (
           <QuestionCard
             key={q._id}
-            _id={q._id}
+            _id{q._id}
             title={q.title}
             tags={q.tags}
             author={q.author}
