@@ -33,7 +33,7 @@ interface SearchParamsProps {
 }
 
 interface URLProps {
-  params: { _id: string };
+  params: { id: string };
   searchParams: { [key: string]: string | undefined };
 }
 

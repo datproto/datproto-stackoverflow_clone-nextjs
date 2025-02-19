@@ -18,6 +18,7 @@ export async function getUserById(params: GetUserByIdParams) {
     await dbConnect()
 
     const { _id } = params
+    console.log(_id)
 
     const user = await User.findOne({ _id })
 

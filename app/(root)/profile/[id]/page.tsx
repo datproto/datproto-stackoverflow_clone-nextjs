@@ -1,5 +1,4 @@
 import React from 'react'
-import { URLProps } from '@/types'
 import { getUserInfo } from '@/lib/actions/user.action'
 import Image from 'next/image'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -10,14 +9,14 @@ import QuestionTab from '@/components/shared/QuestionTab'
 import AnswerTab from '@/components/shared/AnswerTab'
 
 const Page = async ({ params, searchParams }: URLProps) => {
-  const userInfo = await getUserInfo({ _id: params._id })
+  const userInfo = await getUserInfo({ _id: params.id })
 
   return (
     <>
       <div className="flex flex-col-reverse items-start justify-between sm:flex-row">
         <div className="flex flex-col items-start gap-4 lg:flex-row">
           <Image
-            src={userInfo?.user.picture}
+            src={userInfo?.user.picture || ""}
             alt='Profile Picture'
             width={140}
             height={140}
@@ -73,10 +72,10 @@ const Page = async ({ params, searchParams }: URLProps) => {
             <TabsTrigger value="answers" className='tab'>Answers</TabsTrigger>
           </TabsList>
           <TabsContent value="top-posts" className='flex flex-col gap-6'>
-            <QuestionTab userId={userInfo.user._id} searchParams={searchParams} />
+            <QuestionTab userId={userInfo.user._id} />
           </TabsContent>
           <TabsContent value="answers" className='flex flex-col gap-6'>
-            <AnswerTab userId={userInfo.user._id} searchParams={searchParams} />
+            <AnswerTab userId={userInfo.user._id} />
           </TabsContent>
         </Tabs>
 
