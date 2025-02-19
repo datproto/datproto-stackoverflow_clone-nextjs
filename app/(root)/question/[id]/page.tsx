@@ -11,17 +11,13 @@ import { auth } from '@/auth'
 import { getUserById } from '@/lib/actions/user.action'
 import AllAnswers from '@/components/shared/AllAnswers'
 import Votes from '@/components/shared/Votes'
+import { RouteParams } from '@/types'
 
 const Page = async ({
   params
-}: {
-  params: { _id: string };
-  searchParams?: {
-    [key: string]: string | string[] | undefined
-  };
-}) => {
-  const questionId = params._id
-  const result = await getQuestionById({ questionId })
+}: RouteParams) => {
+  const { id } = await params
+  const result = await getQuestionById({ questionId: id })
 
   const session = await auth()
 
@@ -29,7 +25,7 @@ const Page = async ({
 
   if (session) {
     mongoUser = await getUserById({
-      _id: session?.user?._id as string
+      _id: session?.user?.id as string
     })
   }
 
@@ -96,7 +92,7 @@ const Page = async ({
         {question.tags.map((t: any) => (
           <Tag
             key={t._id}
-            _id{t._id}
+            _id={t._id}
             text={t.name}
             showCount={false}
           />

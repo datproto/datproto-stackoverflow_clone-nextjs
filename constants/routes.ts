@@ -3,9 +3,14 @@ const ROUTES = {
   SIGN_IN: "/sign-in",
   SIGN_UP: "/sign-up",
   ASK_QUESTION: "/ask-question",
-  PROFILE: (_id: string) => `/profile/${_id}`,
-  QUESTION: (_id: string) => `/question/${_id}`,
-  TAGS: (_id: string) => `/tags/${_id}`,
+  COLLECTION: "/collection",
+  COMMUNITY: "/community",
+  TAGS: "/tags",
+  JOBS: "/jobs",
+  PROFILE: (id: string) => `/profile/${id}`,
+  QUESTION: (id: string) => `/questions/${id}`,
+  TAG: (id: string) => `/tags/${id}`,
+  SIGN_IN_WITH_OAUTH: `signin-with-oauth`,
 };
 
 export default ROUTES;

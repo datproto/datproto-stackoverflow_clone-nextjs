@@ -2,6 +2,7 @@
 
 import { FilterQuery } from 'mongoose'
 import dbConnect from '@/lib/mongoose'
+import mongoose from 'mongoose'
 import Question from '@/database/question.model'
 import Tag from '@/database/tag.model'
 import {
@@ -13,59 +14,172 @@ import {
 } from '@/lib/shared.types'
 import User from '@/database/user.model'
 import { revalidatePath } from 'next/cache'
+import action from '../handlers/action'
+import { AskQuestionSchema, PaginatedSearchParamsSchema } from '../validation'
+import handleError from '../handlers/error'
+import TagQuestion from '@/database/tag-question.model';
 
-export async function createQuestion(params: CreateQuestionParams) {
+export async function createQuestion(params: CreateQuestionParams): Promise<ActionResponse<Question>> {
+  const validationResult = await action({
+    params,
+    schema: AskQuestionSchema,
+    authorize: true
+  })
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse
+  }
+
+  const { title, content, tags } = validationResult.params!
+  const userId = validationResult.session?.user?.id
+
+  const session = await mongoose.startSession()
+  session.startTransaction()
   try {
-    // Connect to DB
-    await dbConnect()
+    const [question] = await Question.create(
+      [
+        {
+          title,
+          content,
+          author: userId,
+        }
+      ],
+      {
+        session
+      }
+    )
 
-    const { title, content, tags, author, path } = params
+    if (!question) {
+      throw new Error('Failed to create question')
+    }
 
-    // STEP 1: Create the question
-    const question = await Question.create({
-      title, content, author
-    })
+    const tagIds: mongoose.Types.ObjectId[] = []
 
-    const tagDocuments = []
+    const tagQuestionDocuments = []
 
-    // STEP 2: Create the tags or get them
     for (const tag of tags) {
       const existingTag = await Tag.findOneAndUpdate(
         { name: { $regex: new RegExp(`^${tag}$`, 'i') } },
-        { $setOnInsert: { name: tag }, $push: { questions: question._id } },
-        { upsert: true, new: true }
+        {
+          $setOnInsert: {
+            name: tag
+          },
+          $inc: {
+            questions: 1
+          }
+        },
+        {
+          upsert: true,
+          new: true,
+          session
+        }
       )
 
-      tagDocuments.push(existingTag._id)
+      tagIds.push(existingTag._id)
+      tagQuestionDocuments.push({
+        tag: existingTag._id,
+        question: question._id
+      })
     }
 
-    await Question.findByIdAndUpdate(question._id, {
-      $push: { tags: { $each: tagDocuments } }
-    })
+    await TagQuestion.insertMany(tagQuestionDocuments, { session })
 
-    // STEP 3: Create an interaction record for the user's ask_question action
+    await Question.findByIdAndUpdate(
+      question._id,
+      {
+        $push: { tags: { $each: tagIds } }
+      },
+      {
+        session
+      }
+    )
 
-    // STEP 4: Increment author's reputation
-
-    revalidatePath(path)
+    return {
+      success: true,
+      data: JSON.parse(JSON.stringify(question))
+    }
   } catch (e) {
-    console.log(e)
-    throw e
+    session.abortTransaction()
+
+    return handleError(e) as ErrorResponse
+  } finally {
+    session.endSession()
   }
 }
 
-export async function getQuestions(params: GetQuestionsParams) {
+export async function getQuestions(params: PaginatedSearchParams): Promise<ActionResponse<{ questions: Question[]; isNext: boolean }>> {
+  const validationResult = await action({
+    params,
+    schema: PaginatedSearchParamsSchema
+  })
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse
+  }
+
+  const { page = 1, pageSize = 10, query, filter } = params
+  const skip = (Number(page) - 1) * pageSize
+  const limit = Number(pageSize)
+
+  const filterQuery: FilterQuery<typeof Question> = {}
+
+  if (filter === 'recommended') {
+    return {
+      success: true,
+      data: {
+        questions: [],
+        isNext: false
+      }
+    }
+  }
+
+  if (query) {
+    filterQuery.$or = [
+      { title: { $regex: new RegExp(query, "i") } },
+      { content: { $regex: new RegExp(query, "i") } }
+    ]
+  }
+
+  let sortCriteria = {}
+
+  switch (filter) {
+    case 'newest':
+      sortCriteria = { createdAt: -1 }
+      break
+    case 'unanswered':
+      filterQuery.answers = 0
+      sortCriteria = { createdAt: -1 }
+      break
+    case 'popular':
+      sortCriteria = { upvotes: -1 }
+      break
+    default:
+      sortCriteria = { createdAt: -1 }
+      break
+  }
+
   try {
-    await dbConnect()
+    const totalQuestions = await Question.countDocuments(filterQuery)
 
-    const questions = await Question.find({})
-      .populate({ path: 'tags', model: Tag })
-      .populate({ path: 'author', model: User })
+    const questions = await Question.find(filterQuery)
+      .populate('tags', 'name')
+      .populate('author', 'name image')
+      .lean()
+      .sort(sortCriteria)
+      .skip(skip)
+      .limit(limit)
 
-    return { questions }
-  } catch (e) {
-    console.log(e)
-    throw e
+    const isNext = totalQuestions > skip + questions.length
+
+    return {
+      success: true,
+      data: {
+        questions: JSON.parse(JSON.stringify(questions)),
+        isNext
+      }
+    }
+  } catch (error) {
+    return handleError(error) as ErrorResponse
   }
 }
 
@@ -130,27 +244,7 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
       : {}
     const user = await User.findOne({
       _id
-    }).populate(
-      {
-        path: 'saved',
-        match: query,
-        options: {
-          sort: { createdAt: -1 }
-        },
-        populate: [
-          {
-            path: 'tags',
-            model: Tag,
-            select: 'id name'
-          },
-          {
-            path: 'author',
-            model: User,
-            select: 'id clerkId name picture'
-          }
-        ]
-      }
-    )
+    })
 
     if (!user) {
       throw new Error('User not found')
