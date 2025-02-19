@@ -1,18 +1,18 @@
 'use server'
 
-import {ViewQuestionParams} from '@/lib/shared.types'
-import {connectToDatabase} from '@/lib/mongoose'
-import Question from '@/lib/models/question.model'
-import Interaction from '@/lib/models/interaction.model'
+import { ViewQuestionParams } from '@/lib/shared.types'
+import dbConnect from '@/lib/mongoose'
+import Question from '@/database/question.model'
+import Interaction from '@/database/interaction.model'
 
 export async function viewQuestion(params: ViewQuestionParams) {
   try {
-    await connectToDatabase()
+    await dbConnect()
 
-    const {questionId, userId} = params
+    const { questionId, userId } = params
 
     // Update view count for the question
-    await Question.findByIdAndUpdate(questionId, {$inc: {views: 1}})
+    await Question.findByIdAndUpdate(questionId, { $inc: { views: 1 } })
 
     if (userId) {
       const existingInteraction = await Interaction.findOne({

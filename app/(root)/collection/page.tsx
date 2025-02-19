@@ -5,7 +5,7 @@ import React from 'react'
 import NoResult from '@/components/shared/NoResult'
 import QuestionCard from '@/components/cards/QuestionCard'
 import { getSavedQuestions } from '@/lib/actions/question.action'
-import { auth } from '@clerk/nextjs/server'
+import { auth } from '@/auth'
 
 export default async function Home() {
   const { userId } = await auth()

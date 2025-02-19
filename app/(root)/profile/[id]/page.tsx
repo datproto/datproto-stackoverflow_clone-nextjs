@@ -2,10 +2,6 @@ import React from 'react'
 import { URLProps } from '@/types'
 import { getUserInfo } from '@/lib/actions/user.action'
 import Image from 'next/image'
-import { SignedIn } from '@clerk/nextjs'
-import { auth } from '@clerk/nextjs/server'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { getJoinedDate } from '@/lib/utils'
 import ProfileLink from '@/components/shared/ProfileLink'
@@ -15,7 +11,6 @@ import AnswerTab from '@/components/shared/AnswerTab'
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const userInfo = await getUserInfo({ userId: params.id })
-  const { userId: clerkId } = await auth()
 
   return (
     <>
@@ -63,15 +58,6 @@ const Page = async ({ params, searchParams }: URLProps) => {
         </div>
 
         <div className="flex justify-end max-sm:mb-5 max-sm:w-full sm:mt-3">
-          <SignedIn>
-            {clerkId === userInfo.user.clerkId && (
-              <Link href='/profile/edit'>
-                <Button className='paragraph-medium btn-secondary text-dark300_light900 min-h-[46px] min-w-[175px] px-4 py-3 shadow-sm transition-colors'>
-                  Edit Profile
-                </Button>
-              </Link>
-            )}
-          </SignedIn>
         </div>
       </div>
 
@@ -87,10 +73,10 @@ const Page = async ({ params, searchParams }: URLProps) => {
             <TabsTrigger value="answers" className='tab'>Answers</TabsTrigger>
           </TabsList>
           <TabsContent value="top-posts" className='flex flex-col gap-6'>
-            <QuestionTab userId={userInfo.user._id} searchParams={searchParams} clerkId={clerkId} />
+            <QuestionTab userId={userInfo.user._id} searchParams={searchParams} />
           </TabsContent>
           <TabsContent value="answers" className='flex flex-col gap-6'>
-            <AnswerTab userId={userInfo.user._id} searchParams={searchParams} clerkId={clerkId} />
+            <AnswerTab userId={userInfo.user._id} searchParams={searchParams} />
           </TabsContent>
         </Tabs>
 

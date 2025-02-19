@@ -2,7 +2,7 @@ import React from 'react'
 import Question from '@/components/forms/Question'
 import { redirect } from 'next/navigation'
 import { getUserById } from '@/lib/actions/user.action'
-import { auth } from '@clerk/nextjs/server'
+import { auth } from '@/auth'
 
 const Page = async () => {
   const { userId } = await auth()

@@ -1,13 +1,16 @@
-import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import React from 'react'
 import './globals.css'
 // eslint-disable-next-line camelcase
 import { Inter, Space_Grotesk } from 'next/font/google'
 import ThemeProvider from '@/context/ThemeProvider'
+import { Toaster } from 'sonner'
+
+import { SessionProvider } from 'next-auth/react'
+import { auth } from '@/auth'
 
 export const metadata: Metadata = {
-  title: 'Next.js 13 with Clerk',
+  title: 'Stackoverlow 2.0',
   description: 'A community-driven platform for asking and answering programming questions Get help, share knowledge, and collaborate with developers from around the world. Explorer topics in web development, mobile app development, algorithms, data structures, and more.',
   icons: {
     icon: '/favicon.ico'
@@ -26,27 +29,23 @@ const spaceGrotesk = Space_Grotesk({
   variable: '--font-spaceGrotesk'
 })
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: {
   children: React.ReactNode
 }) {
+  const session = await auth()
+
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
-        <ClerkProvider
-          appearance={{
-            elements: {
-              formButtonPrimary: 'primary-gradient',
-              footerActionLink: 'primary-text-gradient hover:text-blue-500'
-            }
-          }}
-        >
+    <html lang="en" suppressHydrationWarning>
+      <SessionProvider session={session}>
+        <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
           <ThemeProvider>
             {children}
+            <Toaster richColors />
           </ThemeProvider>
-        </ClerkProvider>
-      </body>
+        </body>
+      </SessionProvider>
     </html>
   )
 }

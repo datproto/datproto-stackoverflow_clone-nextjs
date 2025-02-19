@@ -5,13 +5,13 @@ import { popularTags, questions, sidebarLinks } from '@/constants'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { useAuth } from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
 import Tag from '@/components/shared/Tag'
+import { signOut } from 'next-auth/react'
+import ROUTES from '@/constants/routes'
 
 const LeftSidebar = () => {
   const pathname = usePathname()
-  const { userId } = useAuth()
 
   return (
     <section
@@ -20,13 +20,13 @@ const LeftSidebar = () => {
         {sidebarLinks.map(item => {
 
           const isActive = (pathname.includes(item.route) && item.route.length > 1) || pathname === item.route
-          if (item.route === '/profile') {
-            if (userId) {
-              item.route = `${item.route}/${userId}`
-            } else {
-              return null
-            }
-          }
+          // if (item.route === '/profile') {
+          //   if (userId) {
+          //     item.route = `${item.route}/${userId}`
+          //   } else {
+          //     return null
+          //   }
+          // }
 
           return (
             <Link href={item.route} key={item.label}
@@ -45,33 +45,34 @@ const LeftSidebar = () => {
       </div>
 
       <div className="flex flex-col gap-3 mt-auto">
-        <Link href="/sign-in" className="flex items-center">
-          <Button
-            className="small-medium text-dark400_light900 flex min-h-[41px] w-full justify-start gap-4 rounded-lg px-4 py-3 shadow-none">
-            <Image
-              src="/icons/account.svg"
-              alt="sign-in"
-              width={20}
-              height={20}
-              className="invert-colors"
-            />
-            <p className="base-medium max-lg:hidden">Log in</p>
-          </Button>
-        </Link>
+        <Button
+          className="small-medium text-dark400_light900 flex min-h-[41px] w-full justify-start gap-4 rounded-lg px-4 py-3 shadow-none">
+          <Image
+            src="/icons/account.svg"
+            alt="sign-in"
+            width={20}
+            height={20}
+            className="invert-colors"
+          />
+          <p className="base-medium max-lg:hidden">Log in</p>
+        </Button>
 
-        <Link href="/sign-up" className="flex items-center">
-          <Button
-            className="small-medium light-border-2 text-dark400_light900 flex min-h-[41px] w-full justify-start gap-4 rounded-lg px-4 py-3 shadow-none">
-            <Image
-              src="/icons/sign-up.svg"
-              alt="sign-up"
-              width={20}
-              height={20}
-              className="invert-colors"
-            />
-            <p className="base-medium max-lg:hidden">Sign Up</p>
-          </Button>
-        </Link>
+        <Button
+          className="small-medium light-border-2 text-dark400_light900 flex min-h-[41px] w-full justify-start gap-4 rounded-lg px-4 py-3 shadow-none"
+          onClick={() => signOut({
+            callbackUrl: ROUTES.SIGN_IN,
+            redirect: false
+          })}
+        >
+          <Image
+            src="/icons/sign-up.svg"
+            alt="sign-up"
+            width={20}
+            height={20}
+            className="invert-colors"
+          />
+          <p className="base-medium max-lg:hidden">Sign Out</p>
+        </Button>
       </div>
     </section>
   )

@@ -1,7 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { SignedIn, UserButton } from '@clerk/nextjs'
 import Theme from '@/components/shared/navbar/Theme'
 import MobileNav from '@/components/shared/navbar/MobileNav'
 import GlobalSearch from '@/components/shared/search/GlobalSearch'
@@ -21,19 +20,6 @@ const Navbar = () => {
 
       <div className="flex-between gap-5">
         <Theme />
-
-        <SignedIn>
-          <UserButton
-            appearance={{
-              elements: {
-                avatarBox: 'h-10 w-10'
-              },
-              variables: {
-                colorPrimary: '#ff7000'
-              }
-            }}
-          />
-        </SignedIn>
 
         <MobileNav />
       </div>

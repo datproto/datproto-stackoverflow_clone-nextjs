@@ -1,5 +1,9 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+/*
+  ---break---
+*/
+@plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -41,6 +45,9 @@
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  --radius-2: 8px;
+  --radius-1.5: 6px;
 
   @keyframes accordion-down {
     from {
@@ -95,22 +102,22 @@
   }
 
   .flex-center {
-    @apply flex justify-center items-center;
+    @apply flex items-center justify-center;
   }
 
   .flex-between {
-    @apply flex justify-between items-center;
+    @apply flex items-center justify-between;
   }
 
   .flex-start {
-    @apply flex justify-start items-center;
+    @apply flex items-center justify-start;
   }
 
   .primary-gradient {
     background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
   }
   .card-wrapper {
-    @apply bg-light-900 dark:bg-transparent dark:bg-linear-[232deg,rgba(23,28,35,0.41)_0%,rgba(19,22,28,0.7)_100%] shadow-light-100 dark:shadow-dark-100;
+    @apply bg-light-900 shadow-light-100 dark:shadow-dark-100 dark:bg-transparent dark:bg-linear-[232deg,rgba(23,28,35,0.41)_0%,rgba(19,22,28,0.7)_100%];
   }
 
   .btn {
@@ -126,11 +133,11 @@
   }
 
   .markdown {
-    @apply max-w-full prose dark:prose-p:text-light-700 dark:prose-ol:text-light-700 dark:prose-ul:text-light-500 dark:prose-strong:text-white dark:prose-headings:text-white prose-headings:text-dark-400 prose-h1:text-dark-300 prose-h2:text-dark-300 prose-p:text-dark-500 prose-ul:text-dark-500 prose-ol:text-dark-500;
+    @apply prose dark:prose-p:text-light-700 dark:prose-ol:text-light-700 dark:prose-ul:text-light-500 dark:prose-strong:text-white dark:prose-headings:text-white prose-headings:text-dark-400 prose-h1:text-dark-300 prose-h2:text-dark-300 prose-p:text-dark-500 prose-ul:text-dark-500 prose-ol:text-dark-500 max-w-full;
   }
 
   .tab {
-    @apply min-h-full! dark:bg-dark-400! bg-light-800! text-light-500! dark:data-[state=active]:bg-dark-300! data-[state=active]:bg-primary-100! data-[state=active]:text-primary-500!;
+    @apply dark:bg-dark-400! bg-light-800! text-light-500! dark:data-[state=active]:bg-dark-300! data-[state=active]:bg-primary-100! data-[state=active]:text-primary-500! min-h-full!;
   }
 
   .background-light850_dark100 {
@@ -143,6 +150,10 @@
 
   .background-light900_dark300 {
     @apply bg-light-900 dark:bg-dark-300;
+  }
+
+  .background-light900_dark400 {
+    @apply bg-light-900 dark:bg-dark-400;
   }
 
   .background-light800_darkgradient {
@@ -162,6 +173,10 @@
     @apply bg-light-700 dark:bg-dark-300;
   }
 
+  .background-light800_dark200 {
+    @apply bg-light-800 dark:bg-dark-200;
+  }
+
   .background-light800_dark300 {
     @apply bg-light-800! dark:bg-dark-300!;
   }
@@ -170,12 +185,12 @@
     @apply text-dark-100! dark:text-light-900!;
   }
 
-  .text-dark200_light900 {
-    @apply text-dark-200 dark:text-light-900;
-  }
-
   .text-dark200_light800 {
     @apply text-dark-200! dark:text-light-800!;
+  }
+
+  .text-dark200_light900 {
+    @apply text-dark-200 dark:text-light-900;
   }
 
   .text-dark300_light700 {
@@ -184,6 +199,10 @@
 
   .text-dark400_light700 {
     @apply text-dark-400 dark:text-light-700;
+  }
+
+  .text-dark500_light400 {
+    @apply text-dark-500! dark:text-light-400!;
   }
 
   .text-dark500_light700 {
@@ -224,79 +243,79 @@
   }
 
   .h1-bold {
-    @apply text-[30px] font-bold leading-[42px] tracking-tighter;
+    @apply text-[30px] leading-[42px] font-bold tracking-tighter;
   }
 
   .h2-bold {
-    @apply text-[24px] font-bold leading-[31.2px];
+    @apply text-[24px] leading-[31.2px] font-bold;
   }
 
   .h2-semibold {
-    @apply text-[24px] font-semibold leading-[31.2px];
+    @apply text-[24px] leading-[31.2px] font-semibold;
   }
 
   .h3-bold {
-    @apply text-[20px] font-bold leading-[26px];
+    @apply text-[20px] leading-[26px] font-bold;
   }
 
   .h3-semibold {
-    @apply text-[20px] font-semibold leading-[24.8px];
+    @apply text-[20px] leading-[24.8px] font-semibold;
   }
 
   .base-medium {
-    @apply text-[18px] font-medium leading-[25.2px];
+    @apply text-[18px] leading-[25.2px] font-medium;
   }
 
   .base-semibold {
-    @apply text-[18px] font-semibold leading-[25.2px];
+    @apply text-[18px] leading-[25.2px] font-semibold;
   }
 
   .base-bold {
-    @apply text-[18px] font-bold leading-[140%];
+    @apply text-[18px] leading-[140%] font-bold;
   }
 
   .paragraph-regular {
-    @apply text-[16px] font-normal leading-[22.4px];
+    @apply text-[16px] leading-[22.4px] font-normal;
   }
 
   .paragraph-medium {
-    @apply text-[16px] font-medium leading-[22.4px];
+    @apply text-[16px] leading-[22.4px] font-medium;
   }
 
   .paragraph-semibold {
-    @apply text-[16px] font-semibold leading-[20.8px];
+    @apply text-[16px] leading-[20.8px] font-semibold;
   }
 
   .body-regular {
-    @apply text-[14px] font-normal leading-[19.6px];
+    @apply text-[14px] leading-[19.6px] font-normal;
   }
 
   .body-medium {
-    @apply text-[14px] font-medium leading-[18.2px];
+    @apply text-[14px] leading-[18.2px] font-medium;
   }
 
   .body-semibold {
-    @apply text-[14px] font-semibold leading-[18.2px];
+    @apply text-[14px] leading-[18.2px] font-semibold;
   }
 
   .small-regular {
-    @apply text-[12px] font-normal leading-[15.6px];
+    @apply text-[12px] leading-[15.6px] font-normal;
   }
 
   .small-medium {
-    @apply text-[12px] font-medium leading-[15.6px];
+    @apply text-[12px] leading-[15.6px] font-medium;
   }
 
   .small-semibold {
-    @apply text-[12px] font-semibold leading-[15.6px];
+    @apply text-[12px] leading-[15.6px] font-semibold;
   }
 
   .subtle-medium {
-    @apply text-[10px]! font-medium! leading-[13px]!;
+    @apply text-[10px]! leading-[13px]! font-medium!;
   }
 
   .subtle-regular {
-    @apply text-[10px] font-normal leading-[13px];
+    @apply text-[10px] leading-[13px] font-normal;
   }
 
   .placeholder {
@@ -425,4 +444,19 @@ code {
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+/*
+  ---break---
+*/
+:root {
+  --radius: 0.6rem;
+}
+/*
+  ---break---
+*/
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
