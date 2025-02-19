@@ -1,9 +1,9 @@
 'use server'
 
 import { FilterQuery } from 'mongoose'
-import { connectToDatabase } from '@/lib/mongoose'
-import Question from '@/lib/models/question.model'
-import Tag from '@/lib/models/tag.model'
+import dbConnect from '@/lib/mongoose'
+import Question from '@/database/question.model'
+import Tag from '@/database/tag.model'
 import {
   CreateQuestionParams,
   GetQuestionByIdParams,
@@ -11,13 +11,13 @@ import {
   GetSavedQuestionsParams, GetUserStatsParams,
   ToggleSaveQuestionParams
 } from '@/lib/shared.types'
-import User from '@/lib/models/user.model'
+import User from '@/database/user.model'
 import { revalidatePath } from 'next/cache'
 
 export async function createQuestion(params: CreateQuestionParams) {
   try {
     // Connect to DB
-    await connectToDatabase()
+    await dbConnect()
 
     const { title, content, tags, author, path } = params
 

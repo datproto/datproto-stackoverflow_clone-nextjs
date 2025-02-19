@@ -13,11 +13,6 @@ const nextConfig = {
         hostname: "*"
       }
     ]
-  },
-  experimental: {
-    serverActions: true,
-    mdxRs: true,
-    serverComponentsExternalPackages: ["mongoose"]
   }
 };
 
